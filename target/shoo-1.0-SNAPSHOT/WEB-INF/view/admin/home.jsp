@@ -17,7 +17,7 @@
         
     <h3>Current users:</h3>
     <c:forEach var="user" items="${users}">
-        <p>${user.name}</p>
+        <p>${user.username}</p>
         
     </c:forEach>
         <a href="${homeURL}">Home</a>

@@ -11,7 +11,6 @@
         <h1>Le home de student.</h1>
         
         <form:form action="update" method='POST'>
-            <label for="name">Name</label><input type="text" name="name" value="${name}"/><br/>
             <label for="username">Username</label><input type="text" name="username" value="${username}" readonly="readonly"/><br/>
             <label for="password">Password</label><input type="password" name="password" value="${password}"/><br/>
 

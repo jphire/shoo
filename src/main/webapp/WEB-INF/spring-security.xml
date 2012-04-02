@@ -9,21 +9,29 @@
             http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <!-- osoitteiden rajoitus -->
-    <http use-expressions="true">
-        <intercept-url pattern="/admin/**" access="hasRole('lecturer') or hasRole('assistant')" />
-        <intercept-url pattern="/student/**" access="hasRole('student')" />
-        <intercept-url pattern="/**" access="permitAll" />
-        
-        <!-- huom! kun teet sovellusta tuotantokäyttöä varten, permitAll-oletus ei ole hyvä idea! /** -->
-        
+    <http  use-expressions="true">
+        <intercept-url pattern="/admin/**" access="hasRole('admin')" />
+        <intercept-url pattern="/home/**" access="isAuthenticated()" />
+<!--        <intercept-url pattern="/connect/**" access="" />-->
+        <intercept-url pattern="/" access="isAuthenticated()" />
+             
         <!-- näytä kirjautumislomake tarvittaessa -->
-        <form-login />
+        <form-login login-page='/signin'/>
         <!-- mahdollisuus logouttiin, ohjaus logoutin jälkeen osoitteeseen /home -->
-        <logout logout-success-url="/home" />
+        <logout logout-success-url="/" />
     </http>
     
+<!--    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="matti" password="bonus" authorities="admin" />
+                <user name="test" password="test" authorities="user" />
+                <user name="arto" password="av" authorities="student" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>-->
     <!-- käyttäjät kannasta -->
-    <authentication-manager>
+    <authentication-manager alias="am">
         <authentication-provider user-service-ref="wadUserDetailsService" />
     </authentication-manager>
 </beans:beans>

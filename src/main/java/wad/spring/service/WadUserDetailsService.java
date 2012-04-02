@@ -35,7 +35,7 @@ public class WadUserDetailsService implements UserDetailsService {
                 getRolesAsGrantedAuthorities(user.getRoles()));
     }
 
-    private List<GrantedAuthority> getRolesAsGrantedAuthorities(List<Role> roles) {
+    public List<GrantedAuthority> getRolesAsGrantedAuthorities(List<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getRolename()));

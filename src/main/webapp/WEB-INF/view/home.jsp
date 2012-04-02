@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -87,7 +88,7 @@
             };
             
         </script>
-        <title>Facegraph</title>
+        <title>Shoo</title>
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
@@ -104,7 +105,8 @@
                         <li><a href="#"></a></li>
                     </ul>
                     <ul class="nav pull-right">
-                        <li><a href="#">&copy;Janne Laukkanen</a></li>
+                        <c:url value="/j_spring_security_logout" var="logout"/>
+                        <li><a href="${logout}">Logout</a></li>
                     </ul>
                     <form class="navbar-search pull-right">
                         <input type="text" class="search-query" placeholder="Search">
@@ -141,6 +143,18 @@
             <button class="btn" type="submit">
                 Button
             </button>
+            <h1>Add user</h1>
+            <c:url value="/user" var="createUser"/>
+            <form:form action="${createUser}" method='POST'>
+                <label for="username">Username</label><input type="text" name="username"/><br/>
+                <label for="password">Password</label><input type="password" name="password" value="vaihda"/><br/>
+
+                <input type="submit">
+            </form:form>
+            <h3>Current users:</h3>
+            <c:forEach var="user" items="${users}">
+                <p>${user.username}</p>
+            </c:forEach>    
             <div class="alert alert-info">
 
             </div>

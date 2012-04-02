@@ -31,6 +31,19 @@
         </property>
         <aop:scoped-proxy proxy-target-class="false" />
     </bean>
-
+    
+    <bean name="signInAdapter" class="wad.spring.service.SignInAdapterImpl">
+<!--        <constructor-arg name="userRegistry" ref="userRegistry" />-->
+    </bean>
+    
+    <bean class="org.springframework.social.connect.web.ConnectController">
+    <!-- relies on by-type autowiring for the constructor-args -->
+    </bean>
+    
+    <bean class="org.springframework.social.connect.web.ProviderSignInController">
+        <property name="applicationUrl" value="http://localhost:8080/shoo" />
+        <property name="signUpUrl" value="/signup" />
+    <!-- relies on by-type autowiring for the constructor-args -->
+    </bean>
 
 </beans>

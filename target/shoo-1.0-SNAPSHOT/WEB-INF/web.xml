@@ -48,6 +48,7 @@
         <param-value>
             /WEB-INF/spring-security.xml
             /WEB-INF/spring-context.xml
+            /WEB-INF/spring-properties.xml
             /WEB-INF/spring-social.xml
         </param-value>
     </context-param>

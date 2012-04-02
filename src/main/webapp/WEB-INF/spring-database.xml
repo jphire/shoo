@@ -45,7 +45,7 @@
     
     <beans profile="production">
         <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
-                factory-method="text">
+              factory-method="text">
             <constructor-arg value="${security.encryptPassword}" />
             <constructor-arg value="${security.encryptSalt}" />
         </bean>
@@ -64,11 +64,14 @@
     
     <beans profile="dev,default">
         <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
-            factory-method="noOpText" />
+              factory-method="noOpText" />
             
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="properties" value="persistenceUnitName=persistenceUnitDev"/>
         </bean>
-        <jdbc:embedded-database id="dataSource" type="HSQL"/> 
+        <jdbc:embedded-database id="dataSource" type="HSQL"> 
+            <jdbc:script location="classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql" />
+        </jdbc:embedded-database>
+            
     </beans>
 </beans>
