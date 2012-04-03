@@ -1,17 +1,23 @@
-<%-- 
-    Document   : facebookConnect
-    Created on : Mar 30, 2012, 2:48:00 PM
-    Author     : janne
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ page session="false" %>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<head>
+	<title>Spring Social Showcase: Connect to Twitter</title>
+</head>
+<body>
+<h1>Spring Social Showcase: Connect to Twitter</h1>
+
+<form action="<c:url value="/connect/facebook" />" method="POST">
+	<div class="formInfo">
+		<p>You haven't created any connections with Facebook yet. Click the button to connect Spring Social Showcase with your Twitter account. 
+		(You'll be redirected to Facebook where you'll be asked to authorize the connection.)</p>
+	</div>
+	<p><button type="submit"><img src="<c:url value="/images/facebook-signin.png" />"/></button></p>
+	<label for="postTweet"><input id="postTweet" type="checkbox" name="postTweet" /> Post a tweet about connecting with Spring Social Showcase</label>
+</form>
+
+
+</body>
 </html>

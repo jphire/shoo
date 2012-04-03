@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService{
     }
     
     @Override
+    public User getUser(String userName){
+        
+        return userRepository.findByUsername(userName);
+    }
+    
+    @Override
     @Transactional
     public void updateProfile(User user, String userName) {
         

@@ -104,10 +104,28 @@
                         <li><a href="#">Info</a></li>
                         <li><a href="#"></a></li>
                     </ul>
+                    <ul class="nav">
+                        <c:if test="${empty connectionsToFacebook}">
+                            <li><form action="<c:url value="/connect/facebook" />" method="POST">
+                                <button class="btn btn-primary" type="submit">
+                                    Connect FB
+                                </button>
+                            </form></li>
+                        </c:if>
+                        <c:if test="${not empty connectionsToFacebook}">
+                            <li><form action="<c:url value="/connect/facebook" />" method="POST">
+                                <button class="btn btn-primary" type="submit" value="delete">
+                                    Disconnect FB
+                                </button>
+                            </form></li>
+                        </c:if>    
+                            <li>${connectionsToProviders}</li>
+                    </ul>
                     <ul class="nav pull-right">
                         <c:url value="/j_spring_security_logout" var="logout"/>
                         <li><a href="${logout}">Logout</a></li>
                     </ul>
+                    
                     <form class="navbar-search pull-right">
                         <input type="text" class="search-query" placeholder="Search">
                     </form>
@@ -143,22 +161,8 @@
             <button class="btn" type="submit">
                 Button
             </button>
-            <h1>Add user</h1>
-            <c:url value="/user" var="createUser"/>
-            <form:form action="${createUser}" method='POST'>
-                <label for="username">Username</label><input type="text" name="username"/><br/>
-                <label for="password">Password</label><input type="password" name="password" value="vaihda"/><br/>
-
-                <input type="submit">
-            </form:form>
-            <h3>Current users:</h3>
-            <c:forEach var="user" items="${users}">
-                <p>${user.username}</p>
-            </c:forEach>    
-            <div class="alert alert-info">
-
-            </div>
         </div>
+        
         <div id="log"></div>
     </body>
 </html>

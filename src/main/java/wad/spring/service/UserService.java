@@ -10,6 +10,8 @@ public interface UserService {
 
     public User addUser(User user);
     
+    public User getUser(String userName);
+    
     @PreAuthorize("isAuthenticated()")
     public void updateProfile(User user, String userName);
     

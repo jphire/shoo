@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Qualifier;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,8 +58,24 @@ public class MainController {
     @Autowired
     private UserDetailsService userDetailsService;
     
+    private final Provider<ConnectionRepository> connectionRepositoryProvider;
+    
+    private final UserRepository userRepository;
+    
+    @Inject
+    public MainController(Provider<ConnectionRepository> connectionRepositoryProvider, UserRepository userRepository) {
+        this.connectionRepositoryProvider = connectionRepositoryProvider;
+        this.userRepository = userRepository;
+    }
+    
+    private ConnectionRepository getConnectionRepository() {
+        return connectionRepositoryProvider.get();
+    }
+    
     @RequestMapping(value = "*")
     public String login(Model model) {
+        List<Connection<Facebook>> connections = connectionRepositoryProvider.get().findConnections(Facebook.class);
+        model.addAttribute("connectionsToFacebook", connections);
         return "home";
     }
 
@@ -71,43 +91,35 @@ public class MainController {
 
     @RequestMapping(value = "/home")
     public String home(HttpServletRequest request, Model model) {
-        if (request.getParameter("code") == null) {
-            return "redirect:https://www.facebook.com/dialog/oauth?client_id=377679492261871&redirect_uri=http://localhost:8080/shoo";
-        } else if (request.getParameter("access_token") != null) {
-            String access_token = request.getParameter("access_token");
-            model.addAttribute("access_token", access_token);
-            return "home";
-        } else {
-            String code = request.getParameter("code");
-            String address = "https://graph.facebook.com/oauth/access_token?client_id=377679492261871&redirect_uri=http://localhost:8080/shoo&client_secret=479c9486c41573105ce1fce374c88461&code=" + code;
-            String token = loginService.getAccessToken(address);
-            model.addAttribute("token", token);
-            return "home";
-        }
-
+        
+        List<Connection<Facebook>> connections = connectionRepositoryProvider.get().findConnections(Facebook.class);
+        model.addAttribute("connectionsToFacebook", connections);
+        
+//        if (request.getParameter("code") == null) {
+//            return "redirect:https://www.facebook.com/dialog/oauth?client_id=377679492261871&redirect_uri=http://localhost:8080/shoo";
+//        } else if (request.getParameter("access_token") != null) {
+//            String access_token = request.getParameter("access_token");
+//            model.addAttribute("access_token", access_token);
+//            return "home";
+//        } else {
+//            String code = request.getParameter("code");
+//            String address = "https://graph.facebook.com/oauth/access_token?client_id=377679492261871&redirect_uri=http://localhost:8080/shoo&client_secret=479c9486c41573105ce1fce374c88461&code=" + code;
+//            String token = loginService.getAccessToken(address);
+//            model.addAttribute("token", token);
+//            return "home";
+//        }
+        return "home";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String postUser(WebRequest request, HttpServletRequest httpRequest, @ModelAttribute User user, Model model) {
+    public String postUser(WebRequest request, HttpServletRequest httpRequest, @ModelAttribute User u, Model model) {
 
-        User u = userService.addUser(user);
-//        System.out.println("roles:" + u.getRoles().get(0).getRolename());
-        
+        User user = userService.addUser(u);
+
         //Programmatically login user
-        Authentication auth = new UsernamePasswordAuthenticationToken(u.getUsername(), u.getPassword());       
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        loginService.loginUser(user);
         
        // httpRequest.getSession( true );
-        // List<GrantedAuthority> authorities = getRolesAsGrantedAuthorities(u.getRoles());
-//        
-        // SignInUtil.signin(u.getUsername(), authorities);
-//
-//        ProviderSignInUtils.handlePostSignUp(u.getUsername(), request);
-//        System.out.println(userRepo.findByUsername(user.getUsername()));
-//        List<User> users = userService.getUsers();
-//        model.addAttribute("users", users);
-//        System.out.println("roles:" + userRepo.findByUsername(u.getUsername()).getRoles());
-////        
         return "redirect:/";
     }
 

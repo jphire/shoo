@@ -29,13 +29,14 @@ import wad.spring.domain.User;
  *
  * @author janne
  */
+@Service
 public class SignInAdapterImpl implements SignInAdapter {
 
 	private final RequestCache requestCache;
         
         @Autowired
-        private UserDetailsService userDetailsService;
-
+        private UserService userService;
+                
 	@Inject
 	public SignInAdapterImpl(RequestCache requestCache) {
 		this.requestCache = requestCache;
@@ -43,10 +44,12 @@ public class SignInAdapterImpl implements SignInAdapter {
 
 	@Override
 	public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
-		UserDetails details = userDetailsService.loadUserByUsername(localUserId);
-                List<GrantedAuthority> authorities = (List<GrantedAuthority>) details.getAuthorities();
-                SignInUtil.signin(localUserId, authorities);
-		return extractOriginalUrl(request);
+		
+                User user = userService.getUser(localUserId);
+                System.out.println(user.getUsername());
+                //List<GrantedAuthority> authorities = (List<GrantedAuthority>) details.getAuthorities();
+                SignInUtil.signin(user);
+		return null;
 	}
 
 	private String extractOriginalUrl(NativeWebRequest request) {
