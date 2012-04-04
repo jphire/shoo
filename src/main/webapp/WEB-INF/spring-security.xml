@@ -21,15 +21,6 @@
         <logout logout-success-url="/" />
     </http>
     
-<!--    <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="matti" password="bonus" authorities="admin" />
-                <user name="test" password="test" authorities="user" />
-                <user name="arto" password="av" authorities="student" />
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>-->
     <!-- käyttäjät kannasta -->
     <authentication-manager alias="am">
         <authentication-provider user-service-ref="wadUserDetailsService" />

@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/spring-social http://www.springframework.org/schema/social/spring-social-1.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
-    <bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+<!--    <bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
         <constructor-arg ref="dataSource" />
         <constructor-arg ref="connectionFactoryLocator" />
         <constructor-arg ref="textEncryptor" />
@@ -30,7 +30,7 @@
             </list>
         </property>
         <aop:scoped-proxy proxy-target-class="false" />
-    </bean>
+    </bean>-->
     
     <bean name="signInAdapter" class="wad.spring.service.SignInAdapterImpl">
 <!--        <constructor-arg name="userRegistry" ref="userRegistry" />-->

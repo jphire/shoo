@@ -11,10 +11,11 @@
     <name>shoo</name>
     <properties>
         <spring-version>3.1.0.RELEASE</spring-version>
+        <spring-security-version>3.1.0.RELEASE</spring-security-version>
         <spring-data-version>1.0.3.RELEASE</spring-data-version>
         
-        <spring-social.version>1.0.1.RELEASE</spring-social.version>
-    	<spring-social-facebook.version>1.0.0.RELEASE</spring-social-facebook.version>
+        <spring-social.version>1.1.0.BUILD-SNAPSHOT</spring-social.version>
+        <spring-social-facebook.version>1.1.0.BUILD-SNAPSHOT</spring-social-facebook.version>
         
         <eclipselink-version>2.3.2</eclipselink-version>
         <eclipselink-jpa-version>2.0.0</eclipselink-jpa-version>
@@ -23,6 +24,8 @@
         
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
+        
+        <org.slf4j-version>1.6.1</org.slf4j-version>
     </properties>
 
     <dependencies>
@@ -62,7 +65,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring-version}</version>
+            <version>${spring-security-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -74,19 +77,19 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring-version}</version>
+            <version>${spring-security-version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring-version}</version>
+            <version>${spring-security-version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-acl</artifactId>
-            <version>${spring-version}</version>
+            <version>${spring-security-version}</version>
         </dependency>
         
         
@@ -237,22 +240,22 @@
             <version>5.1.18</version>
         </dependency>-->
             
-        <!-- loggauskirjastot -->
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
+            <version>${org.slf4j-version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.6.1</version>
+            <version>${org.slf4j-version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
+            <version>${org.slf4j-version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -266,13 +269,14 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.6</version>
+<!--            <version>1.9.3</version>-->
         </dependency>
 
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.6</version>
         </dependency>
         
         <!-- validointi -->
@@ -349,6 +353,12 @@
     </repositories>
 
     <build>
+        
+<!--        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

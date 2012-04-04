@@ -10,87 +10,15 @@
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
         <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/Jit/jit.js'/>"></script>
+<!--        <script type="text/javascript" src="<c:url value='/Jit/jit.js'/>"></script>-->
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-collapse.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/options.js'/>"></script>
-        <script type="text/javascript">
-            window.addEventListener('load', initGraph, false);
-            
-            function initGraph(){
-                window.setTimeout(showMyFriends, 500);
-                window.setTimeout(init, 2000);
-                
-            };
-                  
-            function showMyFriends(){
-                
-                var myId;
-                var myName;
-                
-                FB.api('/me', function(user) {
-                    if(user)
-                        myId = user.id;
-                    myName = user.name;
-                });
-                
-                              
-                FB.api('/me/friends', function(friendList) {
-                    if (friendList) {
-                        //                        var friends = document.getElementById('friends');
-                        //                        friends.innerHTML = friendList;
-                        list = friendList.data.slice(30, 50);
-                        childlist = [];
-                        for(var i = 0; i < list.length; i++){
-                                
-                            //                            if(list[i].name == "Tanja Pulkkinen"){
-                            //                                
-                            //                                getFriends(list[i]);
-                            //                                
-                            //                            }
-                        }
-                        
-                        json = {
-                            id: myId,
-                            name: myName,
-                            children: list
-                        }
-                    }
-                });
-            };
-            
-            //set user's friends
-            function getFriends(object){
-                
-                console.log(object.id);
-                FB.api('/' + object.id + '/friends', function(friendList) {
-                    if (friendList.data) {
-                        console.log(friendList);
-                        object.children = friendList.data.slice(50, 100);
-                        childlist = friendList;
-                        
-                        //                        for(var i in list){
-                        //                            i.children = getFriends(i);
-                        //                        }                
-                    }
-                });
-                 
-            }
-            
-            function getPic(user_id){
-                
-                FB.api('/' + user_id, function(user) {
-                    if (user) {
-                        var image = document.getElementById('image');
-                        image.src = 'http://graph.facebook.com/' + user.id + '/picture';
-                    }
-                });
-            };
-            
-        </script>
+        <script type="text/javascript" src="<c:url value='/js/fb.js'/>"></script>
+
         <title>Shoo</title>
     </head>
-    <body>
+    <body>    
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -99,33 +27,54 @@
                     </a>
                     <ul class="nav">
                         <li class="active">
-                            <a href="#">Home</a>
+                            <c:url value="/home" var="home"/>
+                            <a href="${home}">Home</a>
                         </li>
-                        <li><a href="#">Info</a></li>
-                        <li><a href="#"></a></li>
+                        <li>
+                            <c:url value="/connect" var="connect"/>
+                            <a href="${connect}">Connections</a>
+                        </li>
+                        <li>
+                            <c:url value="/news" var="news"/>
+                            <a href="${news}">News</a>
+                        </li>
+                        <li class="dropdown">
+                            <c:url value="/social/facebook" var="facebook"/>
+                            <c:url value="/social/twitter" var="twitter"/>
+                            <a href="#"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                Social
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="${facebook}">Facebook</a></li>
+                                <li><a href="${twitter}">Twitter</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav">
                         <c:if test="${empty connectionsToFacebook}">
                             <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                <button class="btn btn-primary" type="submit">
-                                    Connect FB
-                                </button>
-                            </form></li>
-                        </c:if>
-                        <c:if test="${not empty connectionsToFacebook}">
+                                    <button class="btn btn-primary" type="submit">
+                                        Connect FB
+                                    </button>
+                                </form></li>
+                            </c:if>
+                            <c:if test="${not empty connectionsToFacebook}">
                             <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                <button class="btn btn-primary" type="submit" value="delete">
-                                    Disconnect FB
-                                </button>
-                            </form></li>
-                        </c:if>    
-                            <li>${connectionsToProviders}</li>
+                                    <button class="btn btn-primary" type="submit" value="delete">
+                                        Disconnect FB
+                                    </button>
+                                </form></li>
+                            </c:if>    
+                        <li>${connectionsToProviders}</li>
                     </ul>
                     <ul class="nav pull-right">
                         <c:url value="/j_spring_security_logout" var="logout"/>
                         <li><a href="${logout}">Logout</a></li>
                     </ul>
-                    
+
                     <form class="navbar-search pull-right">
                         <input type="text" class="search-query" placeholder="Search">
                     </form>
@@ -158,11 +107,9 @@
         </div>
 
         <div id="right-container">
-            <button class="btn" type="submit">
-                Button
-            </button>
+            
         </div>
-        
+
         <div id="log"></div>
     </body>
 </html>
