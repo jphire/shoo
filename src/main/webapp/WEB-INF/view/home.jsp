@@ -56,6 +56,7 @@
                     <ul class="nav">
                         <c:if test="${empty connectionsToFacebook}">
                             <li><form action="<c:url value="/connect/facebook" />" method="POST">
+                                    <input type="hidden" name="scope" value="user_events,user_activities,user_groups,user_likes,user_interests,read_stream,read_friendlists,publish_stream,offline_access" />
                                     <button class="btn btn-primary" type="submit">
                                         Connect FB
                                     </button>

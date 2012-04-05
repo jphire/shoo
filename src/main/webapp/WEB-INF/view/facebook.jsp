@@ -5,7 +5,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
         <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
@@ -15,7 +14,7 @@
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-collapse.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/options.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/fb.js'/>"></script>
-
+        <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
         <title>Shoo</title>
     </head>
     <body>    
@@ -25,7 +24,7 @@
                     <a class="brand" href="#">
                         Shoo
                     </a>
-                    <ul class="nav">
+                    <ul class="nav nav-pills">
                         <li class="active">
                             <c:url value="/home" var="home"/>
                             <a href="${home}">Home</a>
@@ -63,7 +62,7 @@
                             </c:if>
                             <c:if test="${not empty connectionsToFacebook}">
                             <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                    <button class="btn btn-primary" type="submit" value="delete">
+                                    <button class="btn btn-danger" type="submit" value="delete">
                                         Disconnect FB
                                     </button>
                                 </form></li>
@@ -71,11 +70,12 @@
                         <li>${connectionsToProviders}</li>
                     </ul>
                     <ul class="nav pull-right">
-                        <c:url value="/j_spring_security_logout" var="logout"/>
+                        <li><img src="http://graph.facebook.com/${profile.id}/picture"/></li>
+                            <c:url value="/j_spring_security_logout" var="logout"/>
                         <li><a href="${logout}">Logout</a></li>
                     </ul>
 
-                    <form class="navbar-search pull-right">
+                    <form class="navbar-search pull-left">
                         <input type="text" class="search-query" placeholder="Search">
                     </form>
                 </div>
@@ -107,19 +107,61 @@
         </div>
 
         <div id="right-container">
-            <p>Name: ${profile.name}</p>
-            <p>Name: ${profile.email}</p>
-            <p>Name: ${profile.birthday}</p>
-            <p>Name: ${profile.education}</p>
-            <p>Name: ${friends}</p>
-            <ul class="feedList">
+
+
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <c:url value="/home" var="showfeed"/>
+                    <a href="showfeed">Feed</a>
+                </li>
+                <li>
+                    <c:url value="/home" var="showfeed"/>
+                    <a href="showfeed">Home</a>
+                </li>
+                <li>
+                    <c:url value="/home" var="showfeed"/>
+                    <a href="showfeed">Pics</a>
+                </li>
+            </ul> 
+
+
+            <ul class="feed">
                 <c:forEach items="${feed}" var="post">
-                    <li class="post">${feed}
-                        <p><c:if test="${not empty post.picture}"><img src="<c:out value="${post.picture}"/>" align="top"/></c:if>
-                            <c:out value="${post.message}" /> - <c:out value="${post.name}" /></p>
+                    <li class="post">
+
+                        <c:if test="${not empty post.picture}">
+                            <img id="tag-pic" src="<c:out value="${post.picture}"/>" align="top"/>
+                        </c:if>
+                        <c:if test="${not empty post.story}">
+                            <c:out value="${post.story}"/>
+                        </c:if>
+
+                        <c:if test="${not empty post.message}">
+
+                            <img src="http://graph.facebook.com/${post.from.id}/picture"/>
+
+                            <c:out value="${post.from.name} on ${post.createdTime}:" /><br/>
+                            <c:out value="${post.message}" />
+                        </c:if>
+                            <c:forEach items="${post.comments}" var="comment">
+                                <c:out value="${comment}" />
+                            </c:forEach>
+                            <div id="comment">
+                                <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
+                                    <input class="input-medium" type="text" placeholder="Comment">
+                                </form>
+                                <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">
+                                    <button class="btn btn-primary btn-mini" type="submit" value="delete">
+                                        Like
+                                    </button>
+                                </form><br/>
+                            </div>
+                        
+
                     </li>
                 </c:forEach>
             </ul>
+
         </div>
 
         <div id="log"></div>

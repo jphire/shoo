@@ -163,9 +163,9 @@ function init(){
         //This method is called once, on label creation.
         onCreateLabel: function(domElement, node){
     
-            domElement.innerHTML = node.name;
             FB.api('/' + node.id, function(user) {
                 if (user) {
+                    domElement.innerHTML = user.name;
                     picsource = 'http://graph.facebook.com/' + user.id + '/picture';           
                     domElement.innerHTML += "<br/><img src='"+ picsource + "'/>";
                 }
