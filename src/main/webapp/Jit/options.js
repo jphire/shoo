@@ -65,7 +65,7 @@ function init(){
           }
         },
         
-        width: 1500,
+        width: 700,
         height: 800,
         levelDistance: 150,
         fps: 40,
@@ -74,7 +74,7 @@ function init(){
         Navigation: {
           enable: true,
           panning: true,
-          zooming: 35
+          zooming: 45
         },
         //Set Node and Edge styles.
         Node: {

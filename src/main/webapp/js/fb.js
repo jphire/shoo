@@ -4,18 +4,23 @@
  */
 
 window.addEventListener('load', initGraph, false);
-            
+   
+$(document).ready(function() {
+    // check name availability on focus lost
+    $('#homefeed').click(function() {
+        getHomeFeed();
+    });
+});
+
 function initGraph(){
     window.setTimeout(showMyFriends, 1000);
-                
 };
                   
 function showMyFriends(){
                 
     var myId;
     var myName;
-    idList = [];
-    ss=[];            
+    idList = [];            
             
     FB.api('/me', function(user) {
         if(user){
@@ -40,40 +45,23 @@ function showMyFriends(){
                 name: myName,
                 children: idList
             }
-            ss=idList;
+            //Initialize graph here so can wait for FB async call to finish
             init();
         }
-        //Initialize graph here so can wait for FB async call to finish
-        
+           
     });
-                
-                              
-//    FB.api('/me/friends', function(friendList) {
-//        if (friendList) {
-//            
-//            list = friendList.data.slice(30, 50);
-//            
-//            childlist = [];
-//            for(var i = 0; i < list.length; i++){
-//                                
-//                //                            if(list[i].name == "Tanja Pulkkinen"){
-//                //                                
-//                //                                getFriends(list[i]);
-//                //                                
-//                //                            }
-//                }
-//                        
-//            json = {
-//                id: myId,
-//                name: myName,
-//                children: list
-//            }
-//        }
-//        
-       
-//    });
-    
 };
+
+function getHomeFeed(){
+    
+    $.getJSON("facebook/feed", function(feed) {
+        if(feed)
+            console.log(feed);
+        else console.log("error");
+    });
+};
+    
+
             
 //set user's friends
 //function getFriends(object){

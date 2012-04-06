@@ -24,22 +24,42 @@ img {
 }
 
 img#tag-pic {
-    float:none;
-    clear:both;
+    clear: both;
     margin-bottom: 5px;
+}
+
+p#story {
+    
+    clear: both;
+}
+
+hr#feed {
+    margin: 5px;
+    border-top: 1px solid #EEE;
+    border-bottom: 1px solid white; 
 }
 
 form#comment-post {
     float:left;
     display:inline;
+    margin-right: 10px;
+    margin-bottom: 0px;
 }
 
+input {
+    padding:0px;
+    margin-bottom: 0px;
+}
+
+form#like-button {
+    margin-bottom: 0px;
+}
 
 div#comment {
-    
+    height:20px;
+    margin-bottom: 1px;
     clear:both;
 }
-
 
 table {
     margin-top:-10px;
@@ -89,20 +109,23 @@ ul {
 
 #left-container {
     left:0;
+    float:left;
+    width:20%;
     background-image:url('col2.png');
     background-position:center right;
-    border-left:1px solid #ddd;
-    
+    border-left:0px solid #ddd;
+    background-color: #EDEDED;
 }
 
 #right-container {
     float: right;
+    
     width: 20%;
     right:0;
     background-image:url('col1.png');
     background-position:center left;
     background-color: #EDEDED;
-    border-right:1px solid #ddd;
+    border-right:0px solid #ddd;
 }
 
 #right-container h4{
@@ -112,7 +135,7 @@ ul {
 #center-container {
     float: left;
 /*    min-width: 1000px;*/
-    width: 80%;
+    width: 60%;
     left:0px;
     background-color: #fff;
         /*#1a1a1a;*/

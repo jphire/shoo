@@ -25,7 +25,7 @@
                     <a class="brand" href="#">
                         Shoo
                     </a>
-                    <ul class="nav">
+                    <ul class="nav nav-pills">
                         <li class="active">
                             <c:url value="/home" var="home"/>
                             <a href="${home}">Home</a>
@@ -52,65 +52,49 @@
                                 <li><a href="${twitter}">Twitter</a></li>
                             </ul>
                         </li>
-                    </ul>
-                    <ul class="nav">
-                        <c:if test="${empty connectionsToFacebook}">
-                            <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                    <input type="hidden" name="scope" value="user_events,user_activities,user_groups,user_likes,user_interests,read_stream,read_friendlists,publish_stream,offline_access" />
-                                    <button class="btn btn-primary" type="submit">
-                                        Connect FB
-                                    </button>
-                                </form></li>
-                            </c:if>
-                            <c:if test="${not empty connectionsToFacebook}">
-                            <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                    <button class="btn btn-primary" type="submit" value="delete">
-                                        Disconnect FB
-                                    </button>
-                                </form></li>
-                            </c:if>    
-                        <li>${connectionsToProviders}</li>
-                    </ul>
+                    </ul>                   
                     <ul class="nav pull-right">
-                        <c:url value="/j_spring_security_logout" var="logout"/>
+                            <c:url value="/j_spring_security_logout" var="logout"/>
                         <li><a href="${logout}">Logout</a></li>
                     </ul>
-
-                    <form class="navbar-search pull-right">
-                        <input type="text" class="search-query" placeholder="Search">
-                    </form>
                 </div>
             </div>
         </div>
-        <div id="fb-root"></div>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '377679492261871',
-                    status     : true, 
-                    cookie     : true,
-                    xfbml      : true,
-                    oauth      : true
-                });
-          
-            };
-            (function(d){
-                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                d.getElementsByTagName('head')[0].appendChild(js);
-            }(document));
         
-        </script>
+        <div class="container">
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit">
+                <h1>Shoo</h1>
+                <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+                <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+            </div>
 
-        <div id="center-container">
-            <div id="infovis"></div>    
-        </div>
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="span4">
+                    <h2>Social</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-success" href="#">View details &raquo;</a></p>
+                </div>
+                <div class="span4">
+                    <h2>News</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-success" href="#">View details &raquo;</a></p>
+                </div>
+                <div class="span4">
+                    <h2>Calendar</h2>
+                    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                    <p><a class="btn btn-success" href="#">View details &raquo;</a></p>
+                </div>
+            </div>
 
-        <div id="right-container">
-            
-        </div>
+            <hr>
 
-        <div id="log"></div>
+            <footer>
+                <p>&copy; Company 2012</p>
+            </footer>
+
+        </div> <!-- /container -->
+
     </body>
 </html>

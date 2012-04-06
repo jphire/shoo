@@ -102,6 +102,7 @@
         
         </script>
 
+        <div id="left-container"></div>
         <div id="center-container">
             <div id="infovis"></div>    
         </div>
@@ -112,15 +113,15 @@
             <ul class="nav nav-pills">
                 <li class="active">
                     <c:url value="/home" var="showfeed"/>
-                    <a href="showfeed">Feed</a>
+                    <a href="showfeed" onClick="showFeed()">Feed</a>
                 </li>
                 <li>
                     <c:url value="/home" var="showfeed"/>
-                    <a href="showfeed">Home</a>
+                    <a id="homefeed">Home</a>
                 </li>
                 <li>
                     <c:url value="/home" var="showfeed"/>
-                    <a href="showfeed">Pics</a>
+                    <a href="showfeed" onClick="showPics()">Pics</a>
                 </li>
             </ul> 
 
@@ -132,9 +133,9 @@
                         <c:if test="${not empty post.picture}">
                             <img id="tag-pic" src="<c:out value="${post.picture}"/>" align="top"/>
                         </c:if>
-                        <c:if test="${not empty post.story}">
-                            <c:out value="${post.story}"/>
-                        </c:if>
+                        <p id="story"><c:if test="${not empty post.story}">
+                                <c:out value="${post.story}"/></p>
+                            </c:if>
 
                         <c:if test="${not empty post.message}">
 
@@ -143,27 +144,23 @@
                             <c:out value="${post.from.name} on ${post.createdTime}:" /><br/>
                             <c:out value="${post.message}" />
                         </c:if>
-                            <c:forEach items="${post.comments}" var="comment">
-                                <c:out value="${comment}" />
-                            </c:forEach>
-                            <div id="comment">
-                                <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
-                                    <input class="input-medium" type="text" placeholder="Comment">
-                                </form>
-                                <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">
-                                    <button class="btn btn-primary btn-mini" type="submit" value="delete">
-                                        Like
-                                    </button>
-                                </form><br/>
-                            </div>
-                        
-
+                        <c:forEach items="${post.comments}" var="comment">
+                            <c:out value="${comment}" />
+                        </c:forEach>
+                        <div id="comment">
+                            <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
+                                <input class="input-medium" type="text" placeholder="Comment">
+                            </form>
+                            <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">
+                                <button class="btn btn-primary btn-mini" type="submit" value="delete">
+                                    Like
+                                </button>
+                            </form><br/>
+                        </div>
                     </li>
+                    <hr id="feed"/>
                 </c:forEach>
             </ul>
-
-        </div>
-
-        <div id="log"></div>
+        </div
     </body>
 </html>

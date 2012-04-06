@@ -15,6 +15,9 @@ import org.springframework.social.facebook.api.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import wad.spring.repository.UserRepository;
 
 /**
@@ -24,36 +27,34 @@ import wad.spring.repository.UserRepository;
 @Controller
 @RequestMapping(value = "/social")
 public class SocialController {
- 
+
     private final Facebook facebook;
-    
     private final Provider<ConnectionRepository> connectionRepositoryProvider;
-    
     private final UserRepository userRepository;
-    
+
     @Inject
     public SocialController(Facebook facebook, Provider<ConnectionRepository> connectionRepositoryProvider, UserRepository userRepository, Facebook faecbook) {
         this.connectionRepositoryProvider = connectionRepositoryProvider;
         this.userRepository = userRepository;
         this.facebook = facebook;
     }
-    
+
     private ConnectionRepository getConnectionRepository() {
         return connectionRepositoryProvider.get();
     }
-    
+
     @RequestMapping(value = "/facebook")
     public String home(HttpServletRequest request, Model model) {
-                
+
 //        List<String> friendIds = facebook.friendOperations().getFriendIds();
 //        FacebookProfile firstFriend = facebook.userOperations().getUserProfile(friendIds.get(0));
-        
+
         Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
         List<Connection<Facebook>> facebookConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
+        //List<Post> posts = connection.getApi().feedOperations().getPosts();
         List<Post> posts = connection.getApi().feedOperations().getPosts();
-        //List<Post> feed = connection.getApi().feedOperations().getHomeFeed();
-        
-        
+
+
         //List<FacebookProfile> friendIds = facebook.friendOperations().getFriendProfiles();
         model.addAttribute("connectionsToFacebook", facebookConnections);
 //        model.addAttribute("feed", posts);
@@ -61,17 +62,26 @@ public class SocialController {
 //        model.addAttribute("group1", facebook.groupOperations());
         model.addAttribute("friends", facebook.userOperations().getUserPermissions());
         model.addAttribute("profile", facebook.userOperations().getUserProfile());
-        model.addAttribute("posts", posts);
-        
-//        Post p;
-//        p.
-        model.addAttribute("feed", facebook.feedOperations().getFeed());
+        model.addAttribute("feed", posts);
+
+        model.addAttribute("p", facebook.feedOperations().getFeed());
 //        model.addAttribute("friends", connection.getApi().eventOperations().getInvitations());
 //        model.addAttribute("profile", connection.getApi().friendOperations().getFriendProfiles());
-  
+
 //        List<Connection<Twitter>> twitterConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
 //        model.addAttribute("connectionsToFacebook", twitterConnections);
-        
+
         return "facebook";
+    }
+
+    @RequestMapping(value = "/facebook/feed", method = RequestMethod.GET)
+    public @ResponseBody Post getAvailability(Model model) {
+        
+        System.out.println("ok");
+        Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
+        List<Post> posts = connection.getApi().feedOperations().getHomeFeed();
+        model.addAttribute("feed", posts);
+        System.out.println(posts);
+        return posts.get(0);
     }
 }
