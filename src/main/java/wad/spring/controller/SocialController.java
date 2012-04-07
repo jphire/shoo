@@ -4,20 +4,31 @@
  */
 package wad.spring.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import net.sf.json.JSONObject;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import org.springframework.social.facebook.api.Facebook;
 import javax.servlet.http.HttpServletRequest;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.type.TypeFactory;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.*;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import wad.spring.domain.FeedList;
 import wad.spring.repository.UserRepository;
 
 /**
@@ -51,37 +62,36 @@ public class SocialController {
 
         Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
         List<Connection<Facebook>> facebookConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
-        //List<Post> posts = connection.getApi().feedOperations().getPosts();
         List<Post> posts = connection.getApi().feedOperations().getPosts();
 
-
+        Post p;
         //List<FacebookProfile> friendIds = facebook.friendOperations().getFriendProfiles();
         model.addAttribute("connectionsToFacebook", facebookConnections);
-//        model.addAttribute("feed", posts);
-//        model.addAttribute("likes", facebook.likeOperations().getMovies());
-//        model.addAttribute("group1", facebook.groupOperations());
+
         model.addAttribute("friends", facebook.userOperations().getUserPermissions());
         model.addAttribute("profile", facebook.userOperations().getUserProfile());
         model.addAttribute("feed", posts);
 
-        model.addAttribute("p", facebook.feedOperations().getFeed());
-//        model.addAttribute("friends", connection.getApi().eventOperations().getInvitations());
-//        model.addAttribute("profile", connection.getApi().friendOperations().getFriendProfiles());
-
+        
 //        List<Connection<Twitter>> twitterConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
 //        model.addAttribute("connectionsToFacebook", twitterConnections);
 
         return "facebook";
     }
 
-    @RequestMapping(value = "/facebook/feed", method = RequestMethod.GET)
-    public @ResponseBody Post getAvailability(Model model) {
-        
-        System.out.println("ok");
-        Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
-        List<Post> posts = connection.getApi().feedOperations().getHomeFeed();
-        model.addAttribute("feed", posts);
-        System.out.println(posts);
-        return posts.get(0);
-    }
+//    @RequestMapping(value = "/facebook/feed", method = RequestMethod.GET)
+//    public @ResponseBody  getAvailability(Model model) throws IOException{
+//        
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//        System.out.println("ok");
+//        Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
+//        List<Post> posts = new ArrayList(connection.getApi().feedOperations().getPosts());
+//        
+//        model.addAttribute("feed", posts);
+//        System.out.println(posts);
+//        System.out.println(mapper.writeValueAsString(posts));
+//        //ff
+//        return mapper.writeValueAsString(posts);
+//    }
 }

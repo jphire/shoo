@@ -61,6 +61,17 @@ div#comment {
     clear:both;
 }
 
+div#pic {
+    float:left;
+    height: 100%;
+    width: 15%;
+}
+
+div#post {
+    width: 65%;
+    float: left;
+}
+
 table {
     margin-top:-10px;
     margin-left:7px;
@@ -110,7 +121,7 @@ ul {
 #left-container {
     left:0;
     float:left;
-    width:20%;
+    width:10%;
     background-image:url('col2.png');
     background-position:center right;
     border-left:0px solid #ddd;
@@ -120,7 +131,7 @@ ul {
 #right-container {
     float: right;
     
-    width: 20%;
+    width: 30%;
     right:0;
     background-image:url('col1.png');
     background-position:center left;

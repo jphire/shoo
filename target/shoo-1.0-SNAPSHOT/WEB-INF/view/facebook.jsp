@@ -126,39 +126,46 @@
             </ul> 
 
 
-            <ul class="feed">
+            <ul class="feed" id="feed">
                 <c:forEach items="${feed}" var="post">
                     <li class="post">
+                        <div class="container-fluid">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <img src="http://graph.facebook.com/${post.from.id}/picture"/>
+                                </div>
+                                <div class="span9">
+                                    <c:if test="${not empty post.picture}">
+                                        <img id="tag-pic" src="<c:out value="${post.picture}"/>" align="top"/>
+                                    </c:if>
+                                    <p id="story"><c:if test="${not empty post.story}">
+                                            <c:out value="${post.story}"/></p>
+                                        </c:if>
 
-                        <c:if test="${not empty post.picture}">
-                            <img id="tag-pic" src="<c:out value="${post.picture}"/>" align="top"/>
-                        </c:if>
-                        <p id="story"><c:if test="${not empty post.story}">
-                                <c:out value="${post.story}"/></p>
-                            </c:if>
+                                    <c:if test="${not empty post.message}">
 
-                        <c:if test="${not empty post.message}">
-
-                            <img src="http://graph.facebook.com/${post.from.id}/picture"/>
-
-                            <c:out value="${post.from.name} on ${post.createdTime}:" /><br/>
-                            <c:out value="${post.message}" />
-                        </c:if>
-                        <c:forEach items="${post.comments}" var="comment">
-                            <c:out value="${comment}" />
-                        </c:forEach>
-                        <div id="comment">
-                            <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
-                                <input class="input-medium" type="text" placeholder="Comment">
-                            </form>
-                            <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">
-                                <button class="btn btn-primary btn-mini" type="submit" value="delete">
-                                    Like
-                                </button>
-                            </form><br/>
+                                        <c:out value="${post.from.name} on ${post.createdTime}:" /><br/>
+                                        <c:out value="${post.message}" />
+                                    </c:if>
+                                    <c:forEach items="${post.comments}" var="comment">
+                                        <c:out value="${comment}" />
+                                    </c:forEach>
+                                    <div id="comment">
+                                        <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
+                                            <input class="input-medium" type="text" placeholder="Comment">
+                                        </form>
+                                        <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">
+                                            <button class="btn btn-primary btn-mini" type="submit" value="">
+                                                Like
+                                            </button>
+                                        </form><br/>
+                                    </div>
+                                    <hr id="feed"/>
+                                </div>
+                            </div>
                         </div>
                     </li>
-                    <hr id="feed"/>
+
                 </c:forEach>
             </ul>
         </div
