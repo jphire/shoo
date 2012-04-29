@@ -99,7 +99,8 @@ function init(){
             onClick: function(node, eventInfo, e){
                 if(!node || node.nodeFrom)
                             return;
-                console.log(node);       
+                console.log(node); 
+                getProfile(node);
                 //fetchJSON(node, true);
                 FB.api('/' + node.id + '/friends', function(friendList) {
                     if (friendList.data) {
@@ -167,7 +168,7 @@ function init(){
                 if (user) {
                     domElement.innerHTML = user.name;
                     picsource = 'http://graph.facebook.com/' + user.id + '/picture';           
-                    domElement.innerHTML += "<br/><img src='"+ picsource + "'/>";
+                    domElement.innerHTML += "<br/><img class='canvaspic' id='" + user.name + "' " + "src='"+ picsource + "'/>";
                 }
             });
                 

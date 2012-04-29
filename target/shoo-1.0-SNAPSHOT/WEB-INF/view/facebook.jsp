@@ -52,23 +52,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav">
-                        <c:if test="${empty connectionsToFacebook}">
-                            <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                    <button class="btn btn-primary" type="submit">
-                                        Connect FB
-                                    </button>
-                                </form></li>
-                            </c:if>
-                            <c:if test="${not empty connectionsToFacebook}">
-                            <li><form action="<c:url value="/connect/facebook" />" method="POST">
-                                    <button class="btn btn-danger" type="submit" value="delete">
-                                        Disconnect FB
-                                    </button>
-                                </form></li>
-                            </c:if>    
-                        <li>${connectionsToProviders}</li>
-                    </ul>
+
                     <ul class="nav pull-right">
                         <li><img src="http://graph.facebook.com/${profile.id}/picture"/></li>
                             <c:url value="/j_spring_security_logout" var="logout"/>
@@ -102,26 +86,39 @@
         
         </script>
 
-        <div id="left-container"></div>
+        <div id="left-container">
+            
+            
+        </div>
         <div id="center-container">
+            
+                <div class="row">
+                    <div class="span4 offset3">
+                        <form id="publishMyWall">
+                            <input class="span3" type="text" placeholder="Post your status" name="message">
+                            <button class="btn btn-primary" type="submit" value="">
+                                Submit
+                            </button>                         
+                        </form>
+                    </div>
+                </div>
+            
             <div id="infovis"></div>    
         </div>
 
         <div id="right-container">
 
 
-            <ul class="nav nav-pills">
-                <li class="active">
-                    <c:url value="/home" var="showfeed"/>
-                    <a href="showfeed" onClick="showFeed()">Feed</a>
+            <ul class="nav nav-pills" id="facebook-feed">
+                <li id="wall" name="feed">
+                    <a><i class="icon-picture"></i> Feed</a>
+                </li>
+                <li id="homefeed" name="feed">
+                    <a><i class="icon-picture"></i> Home</a>
                 </li>
                 <li>
                     <c:url value="/home" var="showfeed"/>
-                    <a id="homefeed">Home</a>
-                </li>
-                <li>
-                    <c:url value="/home" var="showfeed"/>
-                    <a href="showfeed" onClick="showPics()">Pics</a>
+                    <a href="showfeed" onClick="showPics()"><i class="icon-picture"></i> Pics</a>
                 </li>
             </ul> 
 
@@ -152,7 +149,8 @@
                                     </c:forEach>
                                     <div id="comment">
                                         <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
-                                            <input class="input-medium" type="text" placeholder="Comment">
+                                            <input class="input-medium" type="text" placeholder="Comment" name="message">
+
                                         </form>
                                         <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">
                                             <button class="btn btn-primary btn-mini" type="submit" value="">

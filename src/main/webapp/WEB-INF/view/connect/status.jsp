@@ -67,27 +67,40 @@
 
         <div class="container">
 
-            <h3>Your Connections</h3>
-
+            <h1>Your Connections</h1>
             <c:forEach var="providerId" items="${providerIds}">
                 <c:set var="connections" value="${connectionMap[providerId]}" />
-
-                <div class="accountConnection">
-
-                    <h4><img src="<c:url value="${iconUrl}" />" width="36" height="36" />${providerDisplayName}</h4>
-
+                <h3>${providerId}</h3>
+                <c:if test="${empty connections}">
                     <p>
-                        <c:if test="${not empty connections}">
-                            You are connected to ${providerDisplayName} as ${connections[0]}.
-                        </c:if>
-                        <c:if test="${empty connections}">
-                            You are not yet connected to ${providerDisplayName}.
-                        </c:if>
-                        Click <a href="<c:url value="/connect/${providerId}" />">here</a> to manage your ${providerDisplayName} connection.
-                    </p>
+                    <form action="<c:url value="/connect/facebook" />" method="POST">
+                        You are not yet connected to ${providerId}.
+                        <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
+                    </form>
+                </p>
+
+            </c:if>
+
+
+            <c:url value="/connect/facebook" var="disconnectUrl"/>
+            <c:forEach items="${connections}" var="connection">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                         <div class="span1">
+                            <a href="${connection.profileUrl}" target="_blank"><img src="${connection.imageUrl}" border="0"/></a><br/>
+                        </div>
+                        <div class="span9">
+                            <form id="disconnect${connection.key.providerUserId}" action="${disconnectUrl}/${connection.key.providerUserId}" method="post">
+                                <p>You are connected to ${providerId}</p>
+                                <button class ="btn btn-danger btn-small" type="submit">Disconnect</button>	
+                                <input type="hidden" name="_method" value="delete" />
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </c:forEach>
-            <div id="infovis"></div>    
-        </div>
-    </body>
+        </c:forEach>
+        <div id="infovis"></div>    
+    </div>
+</body>
 </html>

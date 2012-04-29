@@ -14,7 +14,7 @@ html, body {
     background-color:#F2F2F2;
 }
 
-input, select {
+div#comment input, select {
     font-size:0.9em;
 }
 
@@ -46,7 +46,7 @@ form#comment-post {
     margin-bottom: 0px;
 }
 
-input {
+div#comment input {
     padding:0px;
     margin-bottom: 0px;
 }
@@ -93,6 +93,11 @@ ul {
     
 }
 
+ul#facebook-feed li:hover{
+    
+    cursor:pointer;
+}
+
 #container {
     width: 1500px;
     height: 800px;
@@ -121,16 +126,25 @@ ul {
 #left-container {
     left:0;
     float:left;
-    width:10%;
+    width:20%;
     background-image:url('col2.png');
     background-position:center right;
     border-left:0px solid #ddd;
     background-color: #EDEDED;
 }
 
+#center-container {
+    float: left;
+/*    min-width: 1000px;*/
+    width: 49%;
+/*    left:0px;*/
+    background-color: #fff;
+        /*#1a1a1a;*/
+    color:#ccc;
+}
+
 #right-container {
     float: right;
-    
     width: 30%;
     right:0;
     background-image:url('col1.png');
@@ -141,16 +155,6 @@ ul {
 
 #right-container h4{
     text-indent:8px;
-}
-
-#center-container {
-    float: left;
-/*    min-width: 1000px;*/
-    width: 60%;
-    left:0px;
-    background-color: #fff;
-        /*#1a1a1a;*/
-    color:#ccc;
 }
 
 .text {

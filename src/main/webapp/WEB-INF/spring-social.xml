@@ -36,7 +36,11 @@
 <!--        <constructor-arg name="userRegistry" ref="userRegistry" />-->
     </bean>
     
-    <bean class="org.springframework.social.connect.web.ConnectController">
+<!--    <bean class="org.springframework.social.connect.web.ConnectController">
+     relies on by-type autowiring for the constructor-args 
+    </bean>-->
+    
+    <bean class="wad.spring.controller.CustomConnectController">
     <!-- relies on by-type autowiring for the constructor-args -->
     </bean>
     
