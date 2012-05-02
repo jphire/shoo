@@ -7,11 +7,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
         <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/jit.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-collapse.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-button.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/options.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/fb.js'/>"></script>
         <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
@@ -87,22 +89,31 @@
         </script>
 
         <div id="left-container">
-            
-            
+
+
         </div>
         <div id="center-container">
-            
-                <div class="row">
-                    <div class="span4 offset2">
-                        <form id="publishMyWall">
-                            <input class="span3" type="text" placeholder="Post your status" name="message">
+            <div class="container-fluid">
+                <div class="row-fluid">
+
+                    <div class="span6">
+                        <form class="form-inline" id="publishMyWall">
+                            <input class="input-large" type="text" placeholder="Post your status" name="message">
                             <button class="btn btn-primary" type="submit" value="">
                                 Submit
                             </button>                         
                         </form>
                     </div>
+                    <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
+                    <div class="span6">
+                        <div class="btn-group" data-toggle="buttons-radio">
+                            <button class="filter btn btn-primary active" name="friends">Friends</button>
+                            <button class="filter btn btn-primary" name="photos">Photos</button>
+                            <button class="filter btn btn-primary" name="feed">Feed</button>
+                        </div>
+                    </div>
                 </div>
-            
+            </div>
             <div id="infovis"></div>    
         </div>
 
@@ -110,13 +121,13 @@
 
 
             <ul class="nav nav-pills" id="facebook-feed">
-                <li class="active" id="wall" name="feed">
+                <li class="active" id="wall" name="right-cont">
                     <a><i class="icon-user"></i> Feed</a>
                 </li>
-                <li id="homefeed" name="feed">
+                <li id="homefeed" name="right-cont">
                     <a><i class="icon-home"></i> Home</a>
                 </li>
-                <li id="pics" name="feed">
+                <li id="pics" name="right-cont">
                     <c:url value="/home" var="showfeed"/>
                     <a><i class="icon-picture"></i> Pics</a>
                 </li>

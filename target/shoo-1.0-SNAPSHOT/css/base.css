@@ -138,6 +138,7 @@ ul#facebook-feed li:hover{
 /*    min-width: 1000px;*/
     width: 49%;
 /*    left:0px;*/
+    padding-top: 5px;
     background-color: #fff;
         /*#1a1a1a;*/
     color:#ccc;

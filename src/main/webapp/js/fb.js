@@ -7,6 +7,7 @@ window.addEventListener('load', initGraph, false);
    
 $(document).ready(function() {
     
+    
     $('#homefeed').click(function() {
         setActive("homefeed");
         getFeed("home");
@@ -103,7 +104,7 @@ function showMyFriends(){
 function showUserFriends(userId){
                 
     var name;
-    idList = [];            
+    var idList = [];            
             
     FB.api('/' + userId, function(user) {
         if(user){
@@ -136,12 +137,12 @@ function showUserFriends(userId){
 
 function setActive(tagName){
     
-    passive = document.getElementsByName("feed");
+    var passive = document.getElementsByName("right-cont");
     for(var j = 0; j < passive.length; j++){
         passive[j].setAttribute("class", "");
     }
             
-    active = document.getElementById(tagName);
+    var active = document.getElementById(tagName);
     active.setAttribute("class", "active");
 }
 
@@ -151,9 +152,9 @@ function getFeed(feedname){
         if(feedlist){
             console.log(feedlist);
             
-            container = document.getElementById("right-container");
-            oldul = document.getElementById("feed");
-            newul = document.createElement("ul");
+            var container = document.getElementById("right-container");
+            var oldul = document.getElementById("feed");
+            var newul = document.createElement("ul");
             newul.setAttribute("class", "feed");
             newul.setAttribute("id", "feed");
             
@@ -235,27 +236,109 @@ function getFeed(feedname){
     });
 };
 
-function sumFriends(node){
-    FB.api('/' + node.id + '/friends', function(friendList) {
-        if (friendList.data) {
-            var list = friendList.data.slice(0,20); 
-            json_temp = {
-                id: node.id,
-                name: node.name,
-                children: list
-            }
+function sumChoosen(node){
+    
+    var list = $('.filter.active');
+    var limit = 10;
+    
+    for(var i = 0; i < list.length; i++){
+        addFriendsToGraph(node, list[i].name, limit);
+    }
+}
+
+function addFriendsToGraph(node, choice, limit){
+    
+    idList = [];
+    
+    if(choice == "feed" || choice == "both"){
+        FB.api('/' + node.id + '/feed', function(friendList) {
+            if (friendList.data) {
+                for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
+                    if(friendList.data[j].from.id != node.id){
+                        idList[k] = friendList.data[j].from;
+                        console.log(friendList.data[j].from.name);
+                        k++;
+                    }
+                    if(friendList.data[j].comments.count > 0){
+                        for(var l = 0; k < limit && l < friendList.data[j].comments.data.length; l++){
+                            idList[k] = friendList.data[j].comments.data[l].from;
+                            k++;
+                        }                
+                    }
+                    if(friendList.data[j].likes){
+                        for(var h = 0; k < limit && h < friendList.data[j].likes.data.length; h++){
+                            idList[k] = friendList.data[j].likes.data[h];
+                            k++;
+                        }
+                    }
+                
+                }
+                console.log("feedit:");
+                console.log(friendList.data);
+            
+                json_temp = {
+                    id: node.id,
+                    name: node.name,
+                    children: idList
+                }
                          
-            rgraph.op.sum(json_temp, {  
-                type: 'fade:seq',  
-                duration: 1000,  
-                hideLabels: false,  
-                transition: $jit.Trans.Quart.easeOut  
-            });
-        }
-        else {         
-            console.log("no data available");
-        }
-    });
+                rgraph.op.sum(json_temp, {  
+                    type: 'fade:seq',  
+                    duration: 1000,  
+                    hideLabels: false,  
+                    transition: $jit.Trans.Quart.easeOut  
+                });
+            }
+            else {         
+                console.log("no data available");
+            }
+        });
+    }
+    
+    if(choice == "photos" || choice == "both"){
+        FB.api('/' + node.id + '/photos', function(friendList) {
+            if (friendList.data) {
+                for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
+                    if(friendList.data[j].from.id != node.id){
+                        idList[k] = friendList.data[j].from;
+                        console.log(friendList.data[j].from.name);
+                        k++;
+                    }
+                    if(friendList.data[j].comments){
+                        for(var l = 0; k < limit && l < friendList.data[j].comments.data.length; l++){
+                            idList[k] = friendList.data[j].comments.data[l].from;
+                            k++;
+                        }                
+                    }
+                    if(friendList.data[j].likes){
+                        for(var h = 0; k < limit && h < friendList.data[j].likes.data.length; h++){
+                            idList[k] = friendList.data[j].likes.data[h];
+                            k++;
+                        }
+                    }
+                
+                }
+                console.log("feedit:");
+                console.log(friendList.data);
+            
+                json_temp = {
+                    id: node.id,
+                    name: node.name,
+                    children: idList
+                }
+                         
+                rgraph.op.sum(json_temp, {  
+                    type: 'fade:seq',  
+                    duration: 1000,  
+                    hideLabels: false,  
+                    transition: $jit.Trans.Quart.easeOut  
+                });
+            }
+            else {         
+                console.log("no data available");
+            }
+        });
+    }
 }
 
 function getProfile(user){

@@ -101,8 +101,7 @@ function init(){
                     return;
                 console.log(node); 
                 getProfile(node);
-                sumFriends(node);
-                
+                sumChoosen(node);               
             }
         },
         

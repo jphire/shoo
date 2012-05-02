@@ -8,7 +8,8 @@
         <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
-        <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
+<!--        <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>-->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>"></script>
 <!--        <script type="text/javascript" src="<c:url value='/Jit/jit.js'/>"></script>-->
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.js'/>"></script>
@@ -74,7 +75,7 @@
                 <c:if test="${empty connections}">
                     <p>
                     <form action="<c:url value="/connect/facebook" />" method="POST">
-                        <input type="hidden" name="scope" value="publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes" />
+                        <input type="hidden" name="scope" value="read_mailbox,friends_birthday,friends_groups,friends_activities,read_stream,publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes,friends_interests,friends_relationships,friends_notes,friends_location" />
                         You are not yet connected to ${providerId}.
                         <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
                     </form>
