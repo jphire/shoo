@@ -25,7 +25,7 @@
                         Shoo
                     </a>
                     <ul class="nav nav-pills">
-                        <li class="active">
+                        <li>
                             <c:url value="/home" var="home"/>
                             <a href="${home}">Home</a>
                         </li>
@@ -37,7 +37,7 @@
                             <c:url value="/news" var="news"/>
                             <a href="${news}">News</a>
                         </li>
-                        <li class="dropdown">
+                        <li class="active dropdown">
                             <c:url value="/social/facebook" var="facebook"/>
                             <c:url value="/social/twitter" var="twitter"/>
                             <a href="#"
@@ -93,7 +93,7 @@
         <div id="center-container">
             
                 <div class="row">
-                    <div class="span4 offset3">
+                    <div class="span4 offset2">
                         <form id="publishMyWall">
                             <input class="span3" type="text" placeholder="Post your status" name="message">
                             <button class="btn btn-primary" type="submit" value="">
@@ -110,15 +110,15 @@
 
 
             <ul class="nav nav-pills" id="facebook-feed">
-                <li id="wall" name="feed">
-                    <a><i class="icon-picture"></i> Feed</a>
+                <li class="active" id="wall" name="feed">
+                    <a><i class="icon-user"></i> Feed</a>
                 </li>
                 <li id="homefeed" name="feed">
-                    <a><i class="icon-picture"></i> Home</a>
+                    <a><i class="icon-home"></i> Home</a>
                 </li>
-                <li>
+                <li id="pics" name="feed">
                     <c:url value="/home" var="showfeed"/>
-                    <a href="showfeed" onClick="showPics()"><i class="icon-picture"></i> Pics</a>
+                    <a><i class="icon-picture"></i> Pics</a>
                 </li>
             </ul> 
 

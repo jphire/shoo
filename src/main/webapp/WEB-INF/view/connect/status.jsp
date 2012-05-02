@@ -26,11 +26,11 @@
                         Shoo
                     </a>
                     <ul class="nav">
-                        <li class="active">
+                        <li>
                             <c:url value="/home" var="home"/>
                             <a href="${home}">Home</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <c:url value="/connect" var="connect"/>
                             <a href="${connect}">Connections</a>
                         </li>
@@ -74,13 +74,13 @@
                 <c:if test="${empty connections}">
                     <p>
                     <form action="<c:url value="/connect/facebook" />" method="POST">
+                        <input type="hidden" name="scope" value="publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes" />
                         You are not yet connected to ${providerId}.
                         <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
                     </form>
                 </p>
 
             </c:if>
-
 
             <c:url value="/connect/facebook" var="disconnectUrl"/>
             <c:forEach items="${connections}" var="connection">
