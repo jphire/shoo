@@ -101,7 +101,7 @@ function init(){
                     return;
                 console.log(node); 
                 getProfile(node);
-                sumChoosen(node);               
+                sumChosen(node);               
             }
         },
         
@@ -119,6 +119,7 @@ function init(){
                 {
                     FB.api('/' + node.id, function(user) {
                         if (user) {
+                            var p = document.createElement("p");
                             var picsource = 'http://graph.facebook.com/' + user.id + '/picture';           
                             tip.innerHTML = "";
                             tip.innerHTML += '<b>' + node.name + '<br/>';
@@ -151,7 +152,6 @@ function init(){
                     img.setAttribute("class", "canvaspic");
                     img.setAttribute("id", user.id);
                     domElement.appendChild(img);
-                //domElement.innerHTML += "<img class='canvaspic' id='" + user.name + "' " + "src='"+ picsource + "'/>";
                 }
             });
                 

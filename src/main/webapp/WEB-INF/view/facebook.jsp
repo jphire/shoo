@@ -60,10 +60,6 @@
                             <c:url value="/j_spring_security_logout" var="logout"/>
                         <li><a href="${logout}">Logout</a></li>
                     </ul>
-
-                    <form class="navbar-search pull-left">
-                        <input type="text" class="search-query" placeholder="Search">
-                    </form>
                 </div>
             </div>
         </div>
@@ -95,21 +91,34 @@
         <div id="center-container">
             <div class="container-fluid">
                 <div class="row-fluid">
-
-                    <div class="span6">
-                        <form class="form-inline" id="publishMyWall">
-                            <input class="input-large" type="text" placeholder="Post your status" name="message">
-                            <button class="btn btn-primary" type="submit" value="">
-                                Submit
-                            </button>                         
-                        </form>
+                    <div class="span12">
+                        <div class="span3">
+                            <form class="form-inline">
+                                <input type="text" class="input-medium search-query" placeholder="Search from facebook">
+                                <button type="submit" class="btn btn-small btn-primary">Search</button>
+                            </form>
+                        </div>
+                        <div class="span4">
+                            <form class="form-inline" id="publishMyWall">
+                                <input class="input-large" type="text" placeholder="Post your status" name="message">
+                                <button class="btn btn-small btn-primary" type="submit" value="submit">
+                                    Share
+                                </button>                         
+                            </form>
+                        </div>
                     </div>
+                </div>
+                <div class="row-fluid">
                     <!-- Add data-toggle="buttons-checkbox" for checkbox style toggling on btn-group -->
-                    <div class="span6">
-                        <div class="btn-group" data-toggle="buttons-radio">
-                            <button class="filter btn btn-primary active" name="friends">Friends</button>
-                            <button class="filter btn btn-primary" name="photos">Photos</button>
-                            <button class="filter btn btn-primary" name="feed">Feed</button>
+                    <div class="span12">
+                        <div class="span3">
+                            <span class="help-inline">Onclick filtering basis and max results:</span>
+                        </div>
+                        <div class="span3 btn-group" data-toggle="buttons-radio">
+                            <button class="filter btn btn-small btn-primary active" name="friends">Friends</button>
+                            <button class="filter btn btn-small btn-primary" name="photos">Photos</button>
+                            <button class="filter btn btn-small btn-primary" name="feed">Feed</button>
+                            <input id="result-amount" class="input-mini" type="number" name="quantity" min="1" max="10" value="5"/>
                         </div>
                     </div>
                 </div>
@@ -160,7 +169,7 @@
                                     </c:forEach>
                                     <div id="comment">
                                         <form id="comment-post" action="http://graph.facebook.com/${post.id}/comments" method="POST">
-                                            <input class="input-medium" type="text" placeholder="Comment" name="message">
+                                            <input class="input-small" type="text" placeholder="Comment" name="message">
 
                                         </form>
                                         <form id="like-button" action="<c:url value="http://graph.facebook.com/${post.id}/likes" />" method="POST">

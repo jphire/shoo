@@ -204,7 +204,7 @@ function getFeed(feedname){
                 comment_post.setAttribute("method", "POST");
                 
                 var input_comment = document.createElement("input");          
-                input_comment.setAttribute("class", "input-medium");
+                input_comment.setAttribute("class", "input-small");
                 input_comment.setAttribute("type", "text");
                 input_comment.setAttribute("placeholder", "Comment");
                 
@@ -236,10 +236,12 @@ function getFeed(feedname){
     });
 };
 
-function sumChoosen(node){
+function sumChosen(node){
     
     var list = $('.filter.active');
-    var limit = 10;
+    var limitElement = $('#result-amount').get(0);
+    var limit = limitElement.valueAsNumber;
+    
     
     for(var i = 0; i < list.length; i++){
         addFriendsToGraph(node, list[i].name, limit);
