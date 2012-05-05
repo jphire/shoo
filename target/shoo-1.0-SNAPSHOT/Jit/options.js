@@ -100,7 +100,7 @@ function init(){
                 if(!node || node.nodeFrom)
                     return;
                 console.log(node); 
-                getProfile(node);
+                showProfile(node);
                 sumChosen(node);               
             }
         },

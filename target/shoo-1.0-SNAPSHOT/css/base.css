@@ -29,7 +29,7 @@ img#tag-pic {
 }
 
 p#story {
-    
+    overflow: auto;
     clear: both;
 }
 
@@ -98,6 +98,10 @@ ul#facebook-feed li:hover{
     cursor:pointer;
 }
 
+ul.feed {
+    margin-left: 0px;
+}
+
 #container {
     width: 1500px;
     height: 800px;
@@ -146,7 +150,7 @@ ul#facebook-feed li:hover{
 
 #right-container {
     float: right;
-    width: 25%;
+    width: 20%;
     right:0;
     background-image:url('col1.png');
     background-position:center left;
@@ -156,6 +160,11 @@ ul#facebook-feed li:hover{
 
 #right-container h4{
     text-indent:8px;
+}
+
+.rows-left {
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .text {

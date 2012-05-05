@@ -84,9 +84,12 @@
         
         </script>
 
-        <div id="left-container">
+        <div class="container-fluid" id="left-container">
+            <div class="row rows-left" id="first-row">
+                <div class="span2" id="user-info">
 
-
+                </div>
+            </div>
         </div>
         <div id="center-container">
             <div class="container-fluid">
@@ -126,7 +129,7 @@
             <div id="infovis"></div>    
         </div>
 
-        <div id="right-container">
+        <div class="container-fluid" id="right-container">
 
 
             <ul class="nav nav-pills" id="facebook-feed">

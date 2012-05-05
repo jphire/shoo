@@ -35,7 +35,10 @@ $(document).ready(function() {
 });
 
 function initGraph(){
-    window.setTimeout(showMyFriends, 1000);
+    
+    window.setTimeout(showGraph, 1000);
+    window.setTimeout(showMyProfile, 1000);
+    
 };
                   
                   
@@ -65,75 +68,50 @@ function publishFriendWall(id, body){
     });
 }
  
-function showMyFriends(){
-                
-    var myId;
-    var myName;
-    idList = [];            
-            
+function showGraph(){
+    
     FB.api('/me', function(user) {
         if(user){
-            myId = user.id;
-            myName = user.name;
+            show(user);
         }
     });
+}
+
+function show(user){
+    var id = user.id;
+    var name = user.name;
+    var idList = [];            
     
-    FB.api('/me/feed', function(feedlist) {
+    FB.api('/' + id + '/feed', function(feedlist) {
         if(feedlist){
             console.log(feedlist);
             //take 10 friends last commented on user's wall
             for(var j = 0, k = 0; k < 15 && j < feedlist.data.length; j++){
-                if(feedlist.data[j].from.id != myId){
+                if(feedlist.data[j].from.id != id){
                     idList[k] = feedlist.data[j].from;
                     k++;
                 }
             }
            
             json = {
-                id: myId,
-                name: myName,
+                id: id,
+                name: name,
                 children: idList
             }
-            //Initialize graph here so can wait for FB async call to finish
+            //Initialize graph here so can wait for FB's async-call to finish
             init();
         }
            
     });
 };
 
-function showUserFriends(userId){
-                
-    var name;
-    var idList = [];            
-            
-    FB.api('/' + userId, function(user) {
+function showMyProfile(){
+    FB.api('/me', function(user) {
         if(user){
-            name = user.name;
+            showProfile(user);
         }
     });
-    
-    FB.api('/' + userId + 'feed', function(feedlist) {
-        if(feedlist){
-            console.log(feedlist);
-            //take 10 friends last commented on user's wall
-            for(var j = 0, k = 0; k < 15 && j < feedlist.data.length; j++){
-                if(feedlist.data[j].from.id != userId){
-                    idList[k] = feedlist.data[j].from;
-                    k++;
-                }
-            }
-           
-            json = {
-                id: userId,
-                name: name,
-                children: idList
-            }
-            //Initialize graph here so can wait for FB async call to finish
-            init();
-        }
-           
-    });
-};
+}
 
 function setActive(tagName){
     
@@ -159,15 +137,15 @@ function getFeed(feedname){
             newul.setAttribute("id", "feed");
             
             for(var i = 0; i < feedlist.data.length; i++){
-                li = document.createElement("li");
+                var li = document.createElement("li");
                 li.setAttribute("class", "post");
-                div_container = document.createElement("div");
+                var div_container = document.createElement("div");
                 div_container.setAttribute("class", "container-fluid");
-                div_row = document.createElement("div");
+                var div_row = document.createElement("div");
                 div_row.setAttribute("class", "row-fluid");
-                div_span2 = document.createElement("div");
+                var div_span2 = document.createElement("div");
                 div_span2.setAttribute("class", "span2");
-                div_span9 = document.createElement("div");
+                var div_span9 = document.createElement("div");
                 div_span9.setAttribute("class", "span9");
                 li.appendChild(div_container);
                 div_container.appendChild(div_row);
@@ -180,7 +158,7 @@ function getFeed(feedname){
                     div_span9.appendChild(story);
                 }
                 if(feedlist.data[i].picture){
-                    picture = document.createElement("img");
+                    var picture = document.createElement("img");
                     picture.setAttribute("id", "tag-pic");
                     picture.setAttribute("src", feedlist.data[i].picture);
                     picture.setAttribute("align", "top");
@@ -232,7 +210,7 @@ function getFeed(feedname){
             }
             container.replaceChild(newul, oldul);
         }
-        else console.log("error");
+        else console.log("error: couldn't get feed");
     });
 };
 
@@ -241,8 +219,7 @@ function sumChosen(node){
     var list = $('.filter.active');
     var limitElement = $('#result-amount').get(0);
     var limit = limitElement.valueAsNumber;
-    
-    
+       
     for(var i = 0; i < list.length; i++){
         addFriendsToGraph(node, list[i].name, limit);
     }
@@ -250,9 +227,9 @@ function sumChosen(node){
 
 function addFriendsToGraph(node, choice, limit){
     
-    idList = [];
+    var idList = [];
     
-    if(choice == "feed" || choice == "both"){
+    if(choice == "feed"){
         FB.api('/' + node.id + '/feed', function(friendList) {
             if (friendList.data) {
                 for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
@@ -297,7 +274,7 @@ function addFriendsToGraph(node, choice, limit){
         });
     }
     
-    if(choice == "photos" || choice == "both"){
+    if(choice == "photos"){
         FB.api('/' + node.id + '/photos', function(friendList) {
             if (friendList.data) {
                 for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
@@ -341,34 +318,96 @@ function addFriendsToGraph(node, choice, limit){
             }
         });
     }
+    if(choice == "friends"){
+        FB.api('/' + node.id + '/friends', function(friendList) {
+            if (friendList.data) {
+                for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
+                    idList[k] = friendList.data[j];        
+                    k++;
+                }                
+               
+                json_temp = {
+                    id: node.id,
+                    name: node.name,
+                    children: idList
+                }
+                         
+                rgraph.op.sum(json_temp, {  
+                    type: 'fade:seq',  
+                    duration: 1000,  
+                    hideLabels: false,  
+                    transition: $jit.Trans.Quart.easeOut  
+                });
+            }
+            else {         
+                console.log("no data available");
+            }
+        });
+    }
 }
 
-function getProfile(user){
+function setCoverPhoto(coverphoto){
+    FB.api('/' + coverphoto, function(data) {
+        if(data){
+            console.log(data);
+            var cont = $(".rows-left#first-row").get(0);
+            var pic = document.createElement("img");
+            pic.setAttribute("src", data.picture);
+                            
+            var old_div = document.getElementById("user-pic");
+            var new_div = document.createElement("div");
+            new_div.setAttribute("id", "user-pic");
+            new_div.setAttribute("class", "span2");
+            if(old_div)
+                cont.replaceChild(new_div, old_div);
+            else{    
+                cont.appendChild(new_div);
+            }
+            new_div.appendChild(pic);
+        }
+    });
+}
+
+function showProfile(user){
                 
-    FB.api('/' + user.id + '/albums', function(info) {
-        if (info) {
-            console.log(info);
-            for(var i=0; i<info.data.length; i++){
-                if(info.data[i].type == "profile"){
-                    var coverphoto = info.data[i].cover_photo;
-                    FB.api('/' + coverphoto, function(data) {
-                        if(data){
-                            console.log(data);
-                            var cont = document.getElementById("left-container");
-                            var old_div = document.getElementById("main_div");
-                            var new_div = document.createElement("div");
-                            new_div.setAttribute("id", "main_div");
-                            var pic = document.createElement("img");
-                            pic.setAttribute("src", data.picture);
-                            if(old_div)
-                                cont.replaceChild(new_div, old_div);
-                            else
-                                cont.appendChild(new_div);
-                            new_div.appendChild(pic);
-                        }
-                    });
+    FB.api('/' + user.id + '/albums', function(albums) {
+        if (albums.data.length > 0) {
+            console.log(albums);
+            for(var i=0; i<albums.data.length; i++){
+                if(albums.data[i].type == "profile"){
+                    var coverphoto = albums.data[i].cover_photo;
+                    setCoverPhoto(coverphoto);
                 }
             }
+        }
+        else{
+            FB.api('/' + user.id, function(info) {
+                if(info){
+                    console.log(info);
+                    //add user picture
+                    var cont = $(".rows-left#first-row").get(0);
+                    var pic = document.createElement("img");
+                    pic.setAttribute("src", "http://graph.facebook.com/" + user.id + "/picture");
+                    
+                    var old_div = document.getElementById("user-pic");
+                    
+                    var new_div = document.createElement("div");
+                    new_div.setAttribute("id", "user-pic");
+                    new_div.setAttribute("class", "span2");
+                    
+                    if(old_div)
+                        cont.replaceChild(new_div, old_div);
+                    else
+                        cont.appendChild(new_div);
+                    new_div.appendChild(pic);
+                    
+                    //add user info
+                    var cont = $(".rows-left#second-row").get(0);
+                    var info_div = document.createElement("div");
+                    info_div.setAttribute("id", "user-info");
+                    info_div.setAttribute("class", "span2");
+                }
+            }); 
         }
     });
 };
