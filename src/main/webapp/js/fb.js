@@ -1,33 +1,41 @@
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- */
-
-window.addEventListener('load', initGraph, false);
-   
+ */   
+    
 $(document).ready(function() {
     
-    
+    appId = "377679492261871";
+    appURL = "http://localhost:8080/shoo/";
+    myId = 0;
+
     $('#homefeed').click(function() {
         setActive("homefeed");
-        getFeed("home");
+        showFeed("home");
     });
     $('#wall').click(function() {
         setActive("wall");
-        getFeed("feed");
+        showFeed("feed");
     });
     $('#pics').click(function() {
         setActive("pics");
         getPhotos("me");
     });
     
+//    $('#searchFacebook').submit(function() {
+//        // Get all the forms elements and their values in one step
+//        var body = $('#searchFacebook');
+//        console.log(body);
+//        searchFacebook(body);
+//    });
+    
     $('#publishMyWall').submit(function() {
         // Get all the forms elements and their values in one step
-        body = $('#publishMyWall');
+        var body = $('#publishMyWall');
         console.log(body);
     //publishMyWall(body);
     });
-
+    
     $('#publishFriendWall').click(function() {
         publishFriendWall(id, body);
     });
@@ -36,12 +44,27 @@ $(document).ready(function() {
 
 function initGraph(){
     
-    window.setTimeout(showGraph, 1000);
-    window.setTimeout(showMyProfile, 1000);
-    
+    var userId = $('#userid').get(0).innerHTML;
+    showGraph(userId);
+    getUserProfile(userId);
 };
                   
-                  
+function searchFacebook(element){
+    
+    var query = element.children('#searchQuery').value;
+     //https://graph.facebook.com/search?q=mark&type=user
+     FB.api('/search', {q: query, type: 'user'}, function(response) {
+        if (!response || response.error) {
+            alert('Error occured');
+        } else {
+            console.log(response);
+            if(response.data.length > 0){
+                showGraph(response.data(0).id);
+            }
+        }
+    });
+}    
+
 function publishMyWall(body){
     //var body = 'Reading JS SDK documentation';
     FB.api('/me/feed', 'post', {
@@ -68,9 +91,12 @@ function publishFriendWall(id, body){
     });
 }
  
-function showGraph(){
+function showGraph(userId){
     
-    FB.api('/me', function(user) {
+    FB.api('/' + userId, function(user) {
+        console.log(user);
+        if(userId == 'me')
+            myId = user.id;
         if(user){
             show(user);
         }
@@ -80,7 +106,7 @@ function showGraph(){
 function show(user){
     var id = user.id;
     var name = user.name;
-    var idList = [];            
+    idList = [];            
     
     FB.api('/' + id + '/feed', function(feedlist) {
         if(feedlist){
@@ -105,11 +131,13 @@ function show(user){
     });
 };
 
-function showMyProfile(){
-    FB.api('/me', function(user) {
-        if(user){
-            showProfile(user);
+function getUserProfile(userId){
+    FB.api('/' + userId, function(user) {
+        if(userId == 'me'){
+            showProfile(user, true);
         }
+        else
+            showProfile(user, false);
     });
 }
 
@@ -124,7 +152,7 @@ function setActive(tagName){
     active.setAttribute("class", "active");
 }
 
-function getFeed(feedname){
+function showFeed(feedname){
     
     FB.api('/me/'+ feedname, function(feedlist) {
         if(feedlist){
@@ -249,8 +277,51 @@ function addFriendsToGraph(node, choice, limit){
                             idList[k] = friendList.data[j].likes.data[h];
                             k++;
                         }
+                    }      
+                }
+                console.log("feedit:");
+                console.log(friendList.data);
+            
+                json_temp = {
+                    id: node.id,
+                    name: node.name,
+                    children: idList
+                }
+                         
+                rgraph.op.sum(json_temp, {  
+                    type: 'fade:seq',  
+                    duration: 1000,  
+                    hideLabels: false,  
+                    transition: $jit.Trans.Quart.easeOut  
+                });
+            }
+            else {         
+                console.log("no data available");
+            }
+        });
+    }
+    
+    if(choice == "home"){
+        FB.api('/' + node.id + '/home', function(friendList) {
+            if (friendList.data) {
+                for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
+                    if(friendList.data[j].from.id != node.id){
+                        idList[k] = friendList.data[j].from;
+                        console.log(friendList.data[j].from.name);
+                        k++;
                     }
-                
+                    if(friendList.data[j].comments.count > 0){
+                        for(var l = 0; k < limit && l < friendList.data[j].comments.data.length; l++){
+                            idList[k] = friendList.data[j].comments.data[l].from;
+                            k++;
+                        }                
+                    }
+                    if(friendList.data[j].likes){
+                        for(var h = 0; k < limit && h < friendList.data[j].likes.data.length; h++){
+                            idList[k] = friendList.data[j].likes.data[h];
+                            k++;
+                        }
+                    }      
                 }
                 console.log("feedit:");
                 console.log(friendList.data);
@@ -357,7 +428,7 @@ function setCoverPhoto(coverphoto){
             var old_div = document.getElementById("user-pic");
             var new_div = document.createElement("div");
             new_div.setAttribute("id", "user-pic");
-            new_div.setAttribute("class", "span2");
+            new_div.setAttribute("class", "span12");
             if(old_div)
                 cont.replaceChild(new_div, old_div);
             else{    
@@ -368,10 +439,100 @@ function setCoverPhoto(coverphoto){
     });
 }
 
-function showProfile(user){
+function addUserInfo(info){
+    var cont = $(".rows-left#second-row").get(0);
+    var oldInfo = document.getElementById("user-info");
+    if(oldInfo){
+        cont.removeChild(oldInfo);
+    }
+    console.log("info");
+    console.log(info);
+    var info_div = document.createElement("div");
+    info_div.setAttribute("id", "user-info");
+    info_div.setAttribute("class", "span12");
+    cont.appendChild(info_div);
+    
+    var ul = $("<ul></ul>").appendTo(info_div);
+    $("<li>" + info.name + "</li>").appendTo(ul);
+    if(info.birthday){
+        $("<li>Born: " + info.birthday + "</li>").appendTo(ul);
+    }
+    if(info.gender){
+        $("<li>Gender: " + info.gender + "</li>").appendTo(ul);
+    }
+    if(info.location){
+        $("<li>Location: " + info.location.name + "</li>").appendTo(ul);
+    }
+    if(info.relationship_status){
+        $("<li>Relationship status: " + info.relationship_status + "</li>").appendTo(ul);
+    }
+    if(info.significant_other){
+        $("<li>In relationship with: " + info.significant_other.name + "</li>").appendTo(ul);
+    }
+    if(info.work && info.work[0].employer){
+        $("<li>Works at: " + info.work[0].employer.name + "</li>").appendTo(ul);
+    }
+    if(info.education){
+        $("<li>Studied at: " + info.education[0].school.name + "</li>").appendTo(ul);
+    }
+    if(info.work && info.work.employer){
+        $("<li>Favorite athletes: " + info.favorite_athletes[0].name + "</li>").appendTo(ul);
+    }
+}
+
+function addUserPic(user, info){
+    console.log(info);
+    //add user picture
+    var cont = $(".rows-left#first-row").get(0);
+    var pic = document.createElement("img");
+    pic.setAttribute("src", "http://graph.facebook.com/" + user.id + "/picture");
+                    
+    var old_div = document.getElementById("user-pic");
+                    
+    var new_div = document.createElement("div");
+    new_div.setAttribute("id", "user-pic");
+    new_div.setAttribute("class", "span8");
+                    
+    if(old_div)
+        cont.replaceChild(new_div, old_div);
+    else
+        cont.appendChild(new_div);
+    new_div.appendChild(pic);
+}
+
+function addFriendRequestButton(user_info){
+    FB.api('/me/friends', function(friends){
+        if(friends && friends.data){
+            isFriend = false;
+            var cont = $(".rows-left#third-row").get(0);
+            var old_friend_div = document.getElementById("add-friend-div");
+            if(old_friend_div){
+                cont.removeChild(old_friend_div);
+            }
+            for(var i = 0; i < friends.data.length; i++){
+                if(friends.data[i].id == user_info.id){
+                    //add button
+                    isFriend = true;
+                }
+            }
+            if(isFriend == false){
+                var cont = $(".rows-left#third-row").get(0);
+                var friend_div = document.createElement("div");
+                friend_div.setAttribute("id", "add-friend-div");
+                friend_div.setAttribute("class", "span8");
+                cont.appendChild(friend_div);
+                var ul = $("<ul></ul>").appendTo(friend_div);
+                $("<li><a href='http://www.facebook.com/dialog/friends/?id=" + user_info.id + "&app_id=" + appId + "&redirect_uri=" + appURL + "social/facebook'>Add as friend</a></li>").appendTo(ul);
+            }
+        }
+    });
+}
+
+function showProfile(user, isLoggedIn){
                 
     FB.api('/' + user.id + '/albums', function(albums) {
-        if (albums.data.length > 0) {
+        //if big photo available
+        if (albums && albums.data && albums.data.length > 0) {
             console.log(albums);
             for(var i=0; i<albums.data.length; i++){
                 if(albums.data[i].type == "profile"){
@@ -379,33 +540,29 @@ function showProfile(user){
                     setCoverPhoto(coverphoto);
                 }
             }
+            //add user info
+            FB.api('/' + user.id, function(info) {
+                if(info){
+                    addUserInfo(info);
+                    if(isLoggedIn == false){
+                        addFriendRequestButton(info);
+                    }
+                    else{
+                        var cont = $(".rows-left#third-row").get(0);
+                        var old_friend_div = document.getElementById("add-friend-div");
+                        if(old_friend_div){
+                            cont.removeChild(old_friend_div);
+                        }
+                    }
+                }
+            });
         }
         else{
             FB.api('/' + user.id, function(info) {
                 if(info){
-                    console.log(info);
-                    //add user picture
-                    var cont = $(".rows-left#first-row").get(0);
-                    var pic = document.createElement("img");
-                    pic.setAttribute("src", "http://graph.facebook.com/" + user.id + "/picture");
-                    
-                    var old_div = document.getElementById("user-pic");
-                    
-                    var new_div = document.createElement("div");
-                    new_div.setAttribute("id", "user-pic");
-                    new_div.setAttribute("class", "span2");
-                    
-                    if(old_div)
-                        cont.replaceChild(new_div, old_div);
-                    else
-                        cont.appendChild(new_div);
-                    new_div.appendChild(pic);
-                    
-                    //add user info
-                    var cont = $(".rows-left#second-row").get(0);
-                    var info_div = document.createElement("div");
-                    info_div.setAttribute("id", "user-info");
-                    info_div.setAttribute("class", "span2");
+                    addUserPic(user, info);
+                    addUserInfo(info);  
+                    addFriendRequestButton(info);
                 }
             }); 
         }

@@ -24,10 +24,7 @@ import org.springframework.social.facebook.api.*;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import wad.spring.domain.FeedList;
 import wad.spring.repository.UserRepository;
 
@@ -54,7 +51,7 @@ public class SocialController {
         return connectionRepositoryProvider.get();
     }
 
-    @RequestMapping(value = "/facebook")
+    @RequestMapping(value = "/facebook", method = RequestMethod.GET)
     public String home(HttpServletRequest request, Model model) {
 
 //        List<String> friendIds = facebook.friendOperations().getFriendIds();
@@ -64,14 +61,12 @@ public class SocialController {
         List<Connection<Facebook>> facebookConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
         List<Post> posts = connection.getApi().feedOperations().getPosts();
 
-        Post p;
-        //List<FacebookProfile> friendIds = facebook.friendOperations().getFriendProfiles();
         model.addAttribute("connectionsToFacebook", facebookConnections);
-
+        
         model.addAttribute("friends", facebook.userOperations().getUserPermissions());
         model.addAttribute("profile", facebook.userOperations().getUserProfile());
         model.addAttribute("feed", posts);
-
+        model.addAttribute("userid", "me");
         
 //        List<Connection<Twitter>> twitterConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
 //        model.addAttribute("connectionsToFacebook", twitterConnections);
@@ -79,6 +74,29 @@ public class SocialController {
         return "facebook";
     }
 
+    @RequestMapping(value = "/facebook", method = RequestMethod.POST)
+    public String showUser(@RequestParam String userId, Model model) throws IOException{
+        System.out.println("userId: " + userId);
+        return "redirect:facebook/" + userId;
+    }
+    
+    @RequestMapping(value = "/facebook/{userId}", method = RequestMethod.GET)
+    public String showUser(Model model, @PathVariable Integer userId) throws IOException{
+        
+        String s = userId.toString();
+        System.out.println(s);
+        Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
+        List<Connection<Facebook>> facebookConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
+        List<Post> posts = connection.getApi().feedOperations().getPosts();
+
+        model.addAttribute("connectionsToFacebook", facebookConnections);
+        
+        model.addAttribute("profile", facebook.userOperations().getUserProfile());
+        model.addAttribute("feed", posts);
+        model.addAttribute("userid", userId);
+        
+        return "facebook";
+    }
 //    @RequestMapping(value = "/facebook/feed", method = RequestMethod.GET)
 //    public @ResponseBody  getAvailability(Model model) throws IOException{
 //        

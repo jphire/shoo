@@ -58,10 +58,6 @@
                         <c:url value="/j_spring_security_logout" var="logout"/>
                         <li><a href="${logout}">Logout</a></li>
                     </ul>
-
-                    <form class="navbar-search pull-right">
-                        <input type="text" class="search-query" placeholder="Search">
-                    </form>
                 </div>
             </div>
         </div>

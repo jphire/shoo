@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author janne
  *
  * This class is implemented so that the standard url-mapping of
- * ConnectController can be customized. We are only redirecting to the
+ * Spring Social's ConnectController can be customized. We are only redirecting to the
  * all-connections-page after connecting or disconnecting to a serviceprovider.
  */
 public class CustomConnectController extends ConnectController {

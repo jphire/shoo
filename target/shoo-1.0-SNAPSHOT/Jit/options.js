@@ -51,8 +51,8 @@ var Log = {
 
 function init(){
    
-        //init RGraph, BAD WAY
-        rgraph = new $jit.RGraph({
+    //init RGraph, BAD WAY
+    rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
         //Optional: create a background canvas that plots
@@ -99,8 +99,12 @@ function init(){
             onClick: function(node, eventInfo, e){
                 if(!node || node.nodeFrom)
                     return;
-                console.log(node); 
-                showProfile(node);
+                console.log(node);
+                var isLoggedIn = false;
+                if(node.id == myId){
+                    isLoggedIn = true;
+                }
+                showProfile(node, isLoggedIn);
                 sumChosen(node);               
             }
         },

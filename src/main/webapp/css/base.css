@@ -13,6 +13,13 @@ html, body {
     text-align: left;
     background-color:#F2F2F2;
 }
+span#userid {
+    display: none;
+}
+
+div.rows-left ul{
+    margin: 0px;
+}
 
 div#comment input, select {
     font-size:0.9em;
@@ -160,6 +167,10 @@ ul.feed {
 
 #right-container h4{
     text-indent:8px;
+}
+
+div#right-container p {
+    clear: both;
 }
 
 .rows-left {

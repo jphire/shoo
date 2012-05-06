@@ -7,6 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
+        <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
         <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>"></script>
@@ -16,7 +17,7 @@
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-button.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/options.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/fb.js'/>"></script>
-        <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
+        <script type="text/javascript" src="<c:url value='/js/fbinit.js'/>"></script>
         <title>Shoo</title>
     </head>
     <body>    
@@ -64,30 +65,23 @@
             </div>
         </div>
         <div id="fb-root"></div>
-        <script>
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '377679492261871',
-                    status     : true, 
-                    cookie     : true,
-                    xfbml      : true,
-                    oauth      : true
-                });
-          
-            };
-            (function(d){
-                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-                js = d.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                d.getElementsByTagName('head')[0].appendChild(js);
-            }(document));
         
-        </script>
-
+        <span id="userid">${userid}</span>
+        
         <div class="container-fluid" id="left-container">
-            <div class="row rows-left" id="first-row">
-                <div class="span2" id="user-info">
+            <div class="row-fluid rows-left" id="first-row">
+                <div class="span4" id="user-pic">
 
+                </div>
+            </div>
+            <div class="row-fluid rows-left" id="second-row">
+                <div class="span4" id="user-info">
+                    
+                </div>
+            </div>
+            <div class="row-fluid rows-left" id="third-row">
+                <div class="span2" id="add-friend-div">
+                    
                 </div>
             </div>
         </div>
@@ -96,8 +90,8 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="span3">
-                            <form class="form-inline">
-                                <input type="text" class="input-medium search-query" placeholder="Search from facebook">
+                            <form class="form-inline" id="searchFacebook" method="POST">
+                                <input type="text" id="searchQuery" class="input-medium search-query" name="userId" placeholder="Search from facebook">
                                 <button type="submit" class="btn btn-small btn-primary">Search</button>
                             </form>
                         </div>
@@ -120,7 +114,7 @@
                         <div class="span3 btn-group" data-toggle="buttons-radio">
                             <button class="filter btn btn-small btn-primary active" name="friends">Friends</button>
                             <button class="filter btn btn-small btn-primary" name="photos">Photos</button>
-                            <button class="filter btn btn-small btn-primary" name="feed">Feed</button>
+                            <button class="filter btn btn-small btn-primary" name="feed">Wall</button>
                             <input id="result-amount" class="input-mini" type="number" name="quantity" min="1" max="10" value="5"/>
                         </div>
                     </div>
@@ -134,7 +128,7 @@
 
             <ul class="nav nav-pills" id="facebook-feed">
                 <li class="active" id="wall" name="right-cont">
-                    <a><i class="icon-user"></i> Feed</a>
+                    <a><i class="icon-user"></i> Wall</a>
                 </li>
                 <li id="homefeed" name="right-cont">
                     <a><i class="icon-home"></i> Home</a>
