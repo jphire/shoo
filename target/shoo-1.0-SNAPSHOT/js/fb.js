@@ -22,12 +22,13 @@ $(document).ready(function() {
         getPhotos("me");
     });
     
-//    $('#searchFacebook').submit(function() {
-//        // Get all the forms elements and their values in one step
-//        var body = $('#searchFacebook');
-//        console.log(body);
-//        searchFacebook(body);
-//    });
+    $('#searchFacebook').submit(function(e) {
+        // Get all the forms elements and their values in one step
+        var body = $('#searchFacebook');
+        searchFacebook(body);
+        //prevent default behavior
+        return false;
+    });
     
     $('#publishMyWall').submit(function() {
         // Get all the forms elements and their values in one step
@@ -51,15 +52,28 @@ function initGraph(){
                   
 function searchFacebook(element){
     
-    var query = element.children('#searchQuery').value;
-     //https://graph.facebook.com/search?q=mark&type=user
-     FB.api('/search', {q: query, type: 'user'}, function(response) {
+    var query = element.children('#searchQuery')[0].value;
+    
+    FB.api('/search', {
+        q: query, 
+        type: 'user'
+    }, function(response) {
         if (!response || response.error) {
             alert('Error occured');
         } else {
-            console.log(response);
             if(response.data.length > 0){
-                showGraph(response.data(0).id);
+                //                showGraph(response.data[0].id);
+                var userId = response.data[0].id;
+                var name = response.data[0].name;
+                getUserProfile(userId);
+                removeCanvas();
+                json = {
+                    id: userId,
+                    name: name,
+                    children: response.data
+                }
+                //Initialize graph here so can wait for FB's async-call to finish
+                init();
             }
         }
     });
@@ -90,8 +104,16 @@ function publishFriendWall(id, body){
         }
     });
 }
+
+function removeCanvas(){
+    var oldCanvas = $('#infovis-canvaswidget').get(0);
+    if(oldCanvas)
+        $('#infovis').get(0).removeChild(oldCanvas);
+} 
  
 function showGraph(userId){
+    
+    removeCanvas();
     
     FB.api('/' + userId, function(user) {
         console.log(user);
@@ -522,6 +544,7 @@ function addFriendRequestButton(user_info){
                 friend_div.setAttribute("class", "span8");
                 cont.appendChild(friend_div);
                 var ul = $("<ul></ul>").appendTo(friend_div);
+                $("<li>Do you know " + user_info.name + "?").appendTo(ul);
                 $("<li><a href='http://www.facebook.com/dialog/friends/?id=" + user_info.id + "&app_id=" + appId + "&redirect_uri=" + appURL + "social/facebook'>Add as friend</a></li>").appendTo(ul);
             }
         }

@@ -77,6 +77,7 @@ public class SocialController {
     @RequestMapping(value = "/facebook", method = RequestMethod.POST)
     public String showUser(@RequestParam String userId, Model model) throws IOException{
         System.out.println("userId: " + userId);
+        
         return "redirect:facebook/" + userId;
     }
     

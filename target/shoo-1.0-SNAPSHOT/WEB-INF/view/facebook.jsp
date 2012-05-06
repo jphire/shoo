@@ -90,9 +90,9 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="span3">
-                            <form class="form-inline" id="searchFacebook" method="POST">
+                            <form class="form-inline" id="searchFacebook">
                                 <input type="text" id="searchQuery" class="input-medium search-query" name="userId" placeholder="Search from facebook">
-                                <button type="submit" class="btn btn-small btn-primary">Search</button>
+                                <button type="submit" id="search" class="btn btn-small btn-primary">Search</button>
                             </form>
                         </div>
                         <div class="span4">
