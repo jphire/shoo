@@ -82,7 +82,7 @@ public class SocialController {
     }
     
     @RequestMapping(value = "/facebook/{userId}", method = RequestMethod.GET)
-    public String showUser(Model model, @PathVariable Integer userId) throws IOException{
+    public String showUser(Model model, @PathVariable Long userId) throws IOException{
         
         String s = userId.toString();
         System.out.println(s);

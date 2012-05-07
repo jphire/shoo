@@ -71,7 +71,7 @@
                 <c:if test="${empty connections}">
                     <p>
                     <form action="<c:url value="/connect/facebook" />" method="POST">
-                        <input type="hidden" name="scope" value="read_mailbox,friends_birthday,friends_groups,friends_activities,read_stream,publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes,friends_interests,friends_relationships,friends_notes,friends_location" />
+                        <input type="hidden" name="scope" value="friends_birthday,friends_groups,friends_activities,read_stream,publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes,friends_interests,friends_relationships,friends_notes,friends_location" />
                         You are not yet connected to ${providerId}.
                         <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
                     </form>

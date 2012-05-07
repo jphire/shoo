@@ -8,18 +8,21 @@ $(document).ready(function() {
     appId = "377679492261871";
     appURL = "http://localhost:8080/shoo/";
     myId = 0;
-
+    var userId = $('#userid').get(0).innerHTML;
+    
     $('#homefeed').click(function() {
         setActive("homefeed");
-        showFeed("home");
+        showFeed("home", "me");
     });
+    
     $('#wall').click(function() {
         setActive("wall");
-        showFeed("feed");
+        showFeed("feed", userId);
     });
+    
     $('#pics').click(function() {
         setActive("pics");
-        getPhotos("me");
+        getPhotos(userId);
     });
     
     $('#searchFacebook').submit(function(e) {
@@ -48,6 +51,7 @@ function initGraph(){
     var userId = $('#userid').get(0).innerHTML;
     showGraph(userId);
     getUserProfile(userId);
+    showFeed("feed", userId);
 };
                   
 function searchFacebook(element){
@@ -174,9 +178,9 @@ function setActive(tagName){
     active.setAttribute("class", "active");
 }
 
-function showFeed(feedname){
+function showFeed(feedname, userId){
     
-    FB.api('/me/'+ feedname, function(feedlist) {
+    FB.api('/' + userId + '/'+ feedname, function(feedlist) {
         if(feedlist){
             console.log(feedlist);
             
@@ -475,30 +479,30 @@ function addUserInfo(info){
     cont.appendChild(info_div);
     
     var ul = $("<ul></ul>").appendTo(info_div);
-    $("<li>" + info.name + "</li>").appendTo(ul);
+    $("<li><a href='" + appURL + "social/facebook/" + info.id + "'>" + info.name + "</a></li>").appendTo(ul);
     if(info.birthday){
-        $("<li>Born: " + info.birthday + "</li>").appendTo(ul);
+        $("<li><b>Born:</b> " + info.birthday + "</li>").appendTo(ul);
     }
     if(info.gender){
-        $("<li>Gender: " + info.gender + "</li>").appendTo(ul);
+        $("<li><b>Gender:</b> " + info.gender + "</li>").appendTo(ul);
     }
     if(info.location){
-        $("<li>Location: " + info.location.name + "</li>").appendTo(ul);
+        $("<li><b>Location:</b> " + info.location.name + "</li>").appendTo(ul);
     }
     if(info.relationship_status){
-        $("<li>Relationship status: " + info.relationship_status + "</li>").appendTo(ul);
+        $("<li><b>Relationship status:</b> " + info.relationship_status + "</li>").appendTo(ul);
     }
     if(info.significant_other){
-        $("<li>In relationship with: " + info.significant_other.name + "</li>").appendTo(ul);
+        $("<li><b>In relationship with:</b> " + info.significant_other.name + "</li>").appendTo(ul);
     }
     if(info.work && info.work[0].employer){
-        $("<li>Works at: " + info.work[0].employer.name + "</li>").appendTo(ul);
+        $("<li><b>Works at:</b> " + info.work[0].employer.name + "</li>").appendTo(ul);
     }
     if(info.education){
-        $("<li>Studied at: " + info.education[0].school.name + "</li>").appendTo(ul);
+        $("<li><b>Studied at:</b> " + info.education[0].school.name + "</li>").appendTo(ul);
     }
     if(info.work && info.work.employer){
-        $("<li>Favorite athletes: " + info.favorite_athletes[0].name + "</li>").appendTo(ul);
+        $("<li><b>Favorite athletes:</b> " + info.favorite_athletes[0].name + "</li>").appendTo(ul);
     }
 }
 
@@ -538,17 +542,104 @@ function addFriendRequestButton(user_info){
                 }
             }
             if(isFriend == false){
-                var cont = $(".rows-left#third-row").get(0);
+                cont = $(".rows-left#third-row").get(0);
                 var friend_div = document.createElement("div");
                 friend_div.setAttribute("id", "add-friend-div");
                 friend_div.setAttribute("class", "span8");
                 cont.appendChild(friend_div);
                 var ul = $("<ul></ul>").appendTo(friend_div);
-                $("<li>Do you know " + user_info.name + "?").appendTo(ul);
+                $("<li>Do you know " + user_info.name + "?</li>").appendTo(ul);
                 $("<li><a href='http://www.facebook.com/dialog/friends/?id=" + user_info.id + "&app_id=" + appId + "&redirect_uri=" + appURL + "social/facebook'>Add as friend</a></li>").appendTo(ul);
             }
         }
     });
+}
+
+function addAppRequestButton(user){
+    
+    FB.api('/' + user.id, {
+        fields: 'installed'
+    }, function(response) {
+        if (!response || response.error) {
+            alert('Error occured');
+        } 
+        else if(response.installed){
+            console.log("already installed shoo");
+            removeOldAppShareButton();
+        }
+        else{
+            var cont = $(".rows-left#app-row").get(0);
+            removeOldAppShareButton();
+            
+            $("<div class='span12' id='app-div'></div>").appendTo(cont);
+            $("<p id='app-span'><b>" + user.name + "</b> does not use <b>Shoo</b> yet. Help more people to join us!</p>").appendTo('#app-div');
+            $("<button type='button' class='btn btn-medium btn-success' id='send-app-link' name='" + user.id + "'>Inform friend about Shoo&raquo;</button>").appendTo('#app-div');
+            addAppShareEventListener();
+        }
+    });
+}
+
+function addAppShareEventListener(){
+    $('#send-app-link').click(function(e) {
+        shareLink(e.currentTarget.name);
+    });
+}
+
+function removeOldAppShareButton(){
+    var cont = $(".rows-left#app-row").get(0);
+    var old_app_div = document.getElementById("app-div");
+    if(old_app_div){
+        cont.removeChild(old_app_div);
+    }
+}
+
+function removeOldAppUsersRow(){
+    var cont = $(".rows-left#app-users-row").get(0);
+    var old_app_users_div = document.getElementById("app-users-div");
+    if(old_app_users_div){
+        cont.removeChild(old_app_users_div);
+    }
+}
+
+function shareLink(userId){
+    //Handle callback
+    var send_url = "https://www.facebook.com/dialog/send?";
+    var applicationId = "app_id=" + appId + "&";
+    var to = "to=" + userId + "&";
+    var name = "name=Shoo - fluent surfing&";
+    var link = "link=" + appURL + "&";
+    var redirect_uri = "redirect_uri=" + appURL + "/social/facebook";
+    location.href = send_url + applicationId + to + name + link + redirect_uri;
+    
+}
+
+function addAppUsingFriends(user){
+    
+    FB.api('/' + user.id + '/friends', {
+        fields: 'installed,name,picture'
+    }, function(response) {
+        if(!response || response.error){
+            console.log("can't get user's data");
+            removeOldAppUsersRow();
+        }
+        else if(response.data && response.data.length > 0){
+            var friends = response.data;
+            var cont = $(".rows-left#app-users-row").get(0);
+            removeOldAppUsersRow();
+            console.log(response);
+            $("<div class='span12' id='app-users-div'></div>").appendTo(cont);
+            $("<p id='app-users-p'>Friends using Shoo:</p>").appendTo('#app-users-div');
+            $("<ul class='span12' id='app-users-ul'></ul>").appendTo('#app-users-div');
+            for(var i = 0; i < friends.length; i++){
+                if(friends[i].installed){
+                    $("<li id='" + friends[i].id + "'><img src='" + friends[i].picture + "'/><a href='" + appURL + "social/facebook/" + friends[i].id + "'>" + friends[i].name + "</a></li>").appendTo('#app-users-ul');
+                }    
+            }
+        }
+        else{
+            removeOldAppUsersRow();
+        }
+    });    
 }
 
 function showProfile(user, isLoggedIn){
@@ -577,6 +668,8 @@ function showProfile(user, isLoggedIn){
                             cont.removeChild(old_friend_div);
                         }
                     }
+                    addAppRequestButton(info);
+                    addAppUsingFriends(info);
                 }
             });
         }
@@ -586,6 +679,8 @@ function showProfile(user, isLoggedIn){
                     addUserPic(user, info);
                     addUserInfo(info);  
                     addFriendRequestButton(info);
+                    addAppRequestButton(info);
+                    addAppUsingFriends(info);
                 }
             }); 
         }

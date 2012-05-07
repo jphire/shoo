@@ -70,17 +70,27 @@
         
         <div class="container-fluid" id="left-container">
             <div class="row-fluid rows-left" id="first-row">
-                <div class="span4" id="user-pic">
+                <div class="span12" id="user-pic">
 
                 </div>
             </div>
             <div class="row-fluid rows-left" id="second-row">
-                <div class="span4" id="user-info">
+                <div class="span12" id="user-info">
                     
                 </div>
             </div>
             <div class="row-fluid rows-left" id="third-row">
-                <div class="span2" id="add-friend-div">
+                <div class="span8" id="add-friend-div">
+                    
+                </div>
+            </div>
+            <div class="row-fluid rows-left" id="app-row">
+                <div class="span8" id="app-div">
+                    
+                </div>
+            </div>
+            <div class="row-fluid rows-left" id="app-users-row">
+                <div class="span8" id="app-users-div">
                     
                 </div>
             </div>
