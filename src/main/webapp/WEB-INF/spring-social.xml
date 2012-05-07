@@ -41,7 +41,7 @@
     </bean>-->
     
     <bean class="wad.spring.controller.CustomConnectController">
-    <!-- relies on by-type autowiring for the constructor-args -->
+<!--     relies on by-type autowiring for the constructor-args -->
     </bean>
     
     <bean class="org.springframework.social.connect.web.ProviderSignInController">

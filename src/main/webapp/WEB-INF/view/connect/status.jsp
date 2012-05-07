@@ -35,10 +35,6 @@
                             <c:url value="/connect" var="connect"/>
                             <a href="${connect}">Connections</a>
                         </li>
-                        <li>
-                            <c:url value="/news" var="news"/>
-                            <a href="${news}">News</a>
-                        </li>
                         <li class="dropdown">
                             <c:url value="/social/facebook" var="facebook"/>
                             <c:url value="/social/twitter" var="twitter"/>
@@ -62,42 +58,53 @@
             </div>
         </div>
 
-        <div class="container">
-
-            <h1>Your Connections</h1>
-            <c:forEach var="providerId" items="${providerIds}">
-                <c:set var="connections" value="${connectionMap[providerId]}" />
-                <h3>${providerId}</h3>
-                <c:if test="${empty connections}">
-                    <p>
-                    <form action="<c:url value="/connect/facebook" />" method="POST">
-                        <input type="hidden" name="scope" value="friends_birthday,friends_groups,friends_activities,read_stream,publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes,friends_interests,friends_relationships,friends_notes,friends_location" />
-                        You are not yet connected to ${providerId}.
-                        <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
-                    </form>
-                </p>
-
-            </c:if>
-
-            <c:url value="/connect/facebook" var="disconnectUrl"/>
-            <c:forEach items="${connections}" var="connection">
-                <div class="container-fluid">
-                    <div class="row-fluid">
-                         <div class="span1">
-                            <a href="${connection.profileUrl}" target="_blank"><img src="${connection.imageUrl}" border="0"/></a><br/>
+        <div class="container-fluid">
+            <div class="span12">
+                <h1>Your Connections</h1>
+                <hr/>
+                <c:forEach var="providerId" items="${providerIds}">
+                    <div class="well span4" id="up-right">
+                        <c:set var="connections" value="${connectionMap[providerId]}" />
+                        <div class="span4">
+                            <h3>${providerId}</h3>
                         </div>
-                        <div class="span9">
-                            <form id="disconnect${connection.key.providerUserId}" action="${disconnectUrl}/${connection.key.providerUserId}" method="post">
-                                <p>You are connected to ${providerId}</p>
-                                <button class ="btn btn-danger btn-small" type="submit">Disconnect</button>	
-                                <input type="hidden" name="_method" value="delete" />
-                            </form>
-                        </div>
+                        <c:if test="${empty connections}">
+
+                            <div class="span4">
+                                <form action="<c:url value="/connect/${providerId}" />" method="POST">
+                                    <c:if test="${providerId == 'facebook'}">
+                                        <input type="hidden" name="scope" value="friends_birthday,friends_groups,friends_activities,read_stream,publish_stream,offline_access,user_photos,friends_photos,friends_events,friends_likes,friends_interests,friends_relationships,friends_notes,friends_location" />
+                                    </c:if>
+                                    <c:if test="${providerId == 'twitter'}">
+                                        <input type="hidden" name="scope" value="publish_stream,offline_access" />
+                                    </c:if>
+                                    <p>Not yet connected</p>
+                                    <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
+                                </form>
+                                <hr/>
+                            </div>
+                        </c:if>
+
+                        <c:forEach items="${connections}" var="connection">
+                            <c:url value="/connect/${providerId}" var="disconnectUrl"/>
+
+                            <div class="span1">
+                                <a href="${connection.profileUrl}" target="_blank"><img src="${connection.imageUrl}" border="0"/></a><br/>
+                            </div>
+                            <div class="span2">
+                                <form id="disconnect${connection.key.providerUserId}" action="${disconnectUrl}/${connection.key.providerUserId}" method="post">
+                                    <p>Connected to ${providerId}</p>
+                                    <button class ="btn btn-danger btn-small" type="submit">Disconnect</button>	
+                                    <input type="hidden" name="_method" value="delete" />
+                                </form>
+                                <hr/>   
+                            </div>                       
+                        </c:forEach>
+
                     </div>
-                </div>
-            </c:forEach>
-        </c:forEach>
-        <div id="infovis"></div>    
-    </div>
-</body>
+                </c:forEach>
+
+            </div>          
+        </div>        
+    </body>
 </html>

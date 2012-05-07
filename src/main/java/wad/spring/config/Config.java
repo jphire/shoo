@@ -19,6 +19,9 @@ import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.twitter.api.Twitter;
+import org.springframework.social.twitter.api.impl.TwitterTemplate;
+import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 @Configuration
 public class Config {
@@ -39,8 +42,8 @@ public class Config {
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.INTERFACES) 
 	public ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-//		registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("P1aA3U1rmTH8VIzFWMEXg"),
-//				environment.getProperty("HJ0X2rfUa0vUHa4oyTfiTdLXTsy5I8QdfV4RyiQ8jbQ")));
+		registry.addConnectionFactory(new TwitterConnectionFactory("P1aA3U1rmTH8VIzFWMEXg",
+				"HJ0X2rfUa0vUHa4oyTfiTdLXTsy5I8QdfV4RyiQ8jbQ"));
 		registry.addConnectionFactory(new FacebookConnectionFactory("377679492261871",
 				"479c9486c41573105ce1fce374c88461"));
 //		registry.addConnectionFactory(new LinkedInConnectionFactory(environment.getProperty("linkedin.consumerKey"),
@@ -69,5 +72,12 @@ public class Config {
     public Facebook facebook() {
         Connection<Facebook> facebook = connectionRepository().findPrimaryConnection(Facebook.class);
         return facebook != null ? facebook.getApi() : new FacebookTemplate();
+    }
+    
+    @Bean
+    @Scope(value="request", proxyMode=ScopedProxyMode.INTERFACES)	
+    public Twitter twitter() {
+        Connection<Twitter> twitter = connectionRepository().findPrimaryConnection(Twitter.class);
+        return twitter != null ? twitter.getApi() : new TwitterTemplate();
     }
 }

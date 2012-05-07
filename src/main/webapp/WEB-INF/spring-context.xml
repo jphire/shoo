@@ -31,7 +31,7 @@
     
     <!-- Sovelluksemme lähdekooditiedostot sijaitsevat pakkauksessa wad tai sen alipakkauksissa-->
     <context:component-scan base-package="wad" />
-
+    
     <mvc:resources mapping="/Jit/**" location="/Jit/" />
     <mvc:resources mapping="/js/**" location="/js/" />
     <mvc:resources mapping="/bootstrap/**" location="/bootstrap/" />

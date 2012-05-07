@@ -3,6 +3,7 @@ package wad.spring.domain;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "USERS")
 public class User implements Serializable {
@@ -11,6 +12,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @Column(unique = true)
+    @NotNull
     private String username;
     private String password;
     

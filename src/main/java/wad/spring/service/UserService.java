@@ -19,5 +19,7 @@ public interface UserService {
     public List<User> getUsers();
 
 //    public User findByLogin(Long userId);
+    @PreAuthorize("isAuthenticated()")
+    public String getUsername();
 
 }

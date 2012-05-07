@@ -187,7 +187,17 @@
             <artifactId>spring-social-facebook</artifactId>
             <version>${spring-social-facebook.version}</version>
         </dependency>   
-    
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+            <version>1.1.0.BUILD-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-linkedin</artifactId>
+            <version>${org.springframework.social.linkedin-version}</version>
+        </dependency>
     <!-- Spring Social Core TAKE CARE OF RIGHT VERSION-HOURS OF DEBUGGING OTHERWISE-->
         <dependency>
             <groupId>org.springframework.social</groupId>

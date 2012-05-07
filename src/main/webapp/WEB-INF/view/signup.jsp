@@ -30,14 +30,15 @@
                     </a>
                     <ul class="nav">
                         <li class="active">
-                            <a href="/home">Home</a>
+                            <c:url value="/home" var="home"/>
+                            <a href="${home}">Home</a>
                         </li>
-                        <li><a href="/info">Info</a></li>
-                        <li><a href="#"></a></li>
+                        <li>
+                            <c:url value="/info" var="info"/>
+                            <a href="${info}">Info</a>
+                        </li>
                     </ul>
-                    <ul class="nav pull-right">
-                        <li><a href="#">&copy;Janne Laukkanen</a></li>
-                    </ul>
+                    
                 </div>
             </div>
         </div>

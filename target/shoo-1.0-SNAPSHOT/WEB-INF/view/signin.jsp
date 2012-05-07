@@ -59,7 +59,7 @@
                         <img src="<c:url value="/images/facebook-signin.png"/>" />
                     </button>
                 </form>
-                <form id="tw_signin" action="<c:url value="/connect/twitter"/>" method="POST">
+                <form id="tw_signin" action="<c:url value="/signin/twitter"/>" method="POST">
                     <button type="submit">
                         <img src="<c:url value="/images/twitter-signin.png"/>" />
                     </button>

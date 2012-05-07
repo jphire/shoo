@@ -19,13 +19,19 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import wad.spring.domain.User;
 import wad.spring.repository.UserRepository;
+import wad.spring.service.UserService;
 
 @Controller
 public class MainController {
     
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    @Autowired
+    private UserService userService;
     
     private final Provider<ConnectionRepository> connectionRepositoryProvider;
     
@@ -43,18 +49,28 @@ public class MainController {
     
     @RequestMapping(value = "*")
     public String login(Model model) {
-//        List<Connection<Facebook>> connections = connectionRepositoryProvider.get().findConnections(Facebook.class);
-//        model.addAttribute("connectionsToFacebook", connections);
         return "redirect:/home";
     }
 
     @RequestMapping(value = "/home")
     public String home(HttpServletRequest request, Model model) {
         
-        List<Connection<Facebook>> connections = connectionRepositoryProvider.get().findConnections(Facebook.class);
-        model.addAttribute("connectionsToFacebook", connections);
+        String userName = userService.getUsername();
+        
+        model.addAttribute("userName", userName);
         
         return "home";
+    }
+    
+    @RequestMapping(value = "/home/user")
+    @ResponseBody
+    public User getUser(Model model) {
+        
+        String userName = userService.getUsername();
+        User user = new User();
+        user.setUsername(userName);
+                
+        return user;
     }
 
 }

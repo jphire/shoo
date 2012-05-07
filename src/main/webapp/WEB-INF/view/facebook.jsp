@@ -36,10 +36,6 @@
                             <c:url value="/connect" var="connect"/>
                             <a href="${connect}">Connections</a>
                         </li>
-                        <li>
-                            <c:url value="/news" var="news"/>
-                            <a href="${news}">News</a>
-                        </li>
                         <li class="active dropdown">
                             <c:url value="/social/facebook" var="facebook"/>
                             <c:url value="/social/twitter" var="twitter"/>
