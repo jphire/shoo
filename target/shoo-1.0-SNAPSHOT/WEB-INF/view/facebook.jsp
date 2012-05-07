@@ -107,7 +107,7 @@
                         </div>
                         <div class="span4">
                             <form class="form-inline" id="publishMyWall">
-                                <input class="input-large" type="text" placeholder="Post your status" name="message">
+                                <input class="input-large" id="publishMessage" type="text" placeholder="Post your status" name="message">
                                 <button class="btn btn-small btn-primary" type="submit" value="submit">
                                     Share
                                 </button>                         

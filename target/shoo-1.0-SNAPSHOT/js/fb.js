@@ -26,7 +26,7 @@ $(document).ready(function() {
     });
     
     $('#searchFacebook').submit(function(e) {
-        // Get all the forms elements and their values in one step
+        // Get all search query text in one step
         var body = $('#searchFacebook');
         searchFacebook(body);
         //prevent default behavior
@@ -34,10 +34,9 @@ $(document).ready(function() {
     });
     
     $('#publishMyWall').submit(function() {
-        // Get all the forms elements and their values in one step
-        var body = $('#publishMyWall');
-        console.log(body);
-    //publishMyWall(body);
+        // Get all message to be posted in one step
+        var body = $('#publishMyWall').children('#publishMessage')[0].value;
+        publishMyWall(body);
     });
     
     $('#publishFriendWall').click(function() {

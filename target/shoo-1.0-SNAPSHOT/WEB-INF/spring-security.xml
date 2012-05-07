@@ -12,7 +12,10 @@
     <http  use-expressions="true">
         <intercept-url pattern="/admin/**" access="hasRole('admin')" />
         <intercept-url pattern="/home/**" access="isAuthenticated()" />
-<!--        <intercept-url pattern="/connect/**" access="" />-->
+        <intercept-url pattern="/connect/**" access="isAuthenticated()" />
+        <intercept-url pattern="/social/**" access="isAuthenticated()" />
+        <intercept-url pattern="/news/**" access="isAuthenticated()" />
+        <intercept-url pattern="/info/**" access="isAuthenticated()" />
         <intercept-url pattern="/" access="isAuthenticated()" />
              
         <!-- näytä kirjautumislomake tarvittaessa -->

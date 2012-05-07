@@ -39,8 +39,8 @@ public class Config {
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.INTERFACES) 
 	public ConnectionFactoryLocator connectionFactoryLocator() {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-//		registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("twitter.consumerKey"),
-//				environment.getProperty("twitter.consumerSecret")));
+//		registry.addConnectionFactory(new TwitterConnectionFactory(environment.getProperty("P1aA3U1rmTH8VIzFWMEXg"),
+//				environment.getProperty("HJ0X2rfUa0vUHa4oyTfiTdLXTsy5I8QdfV4RyiQ8jbQ")));
 		registry.addConnectionFactory(new FacebookConnectionFactory("377679492261871",
 				"479c9486c41573105ce1fce374c88461"));
 //		registry.addConnectionFactory(new LinkedInConnectionFactory(environment.getProperty("linkedin.consumerKey"),
