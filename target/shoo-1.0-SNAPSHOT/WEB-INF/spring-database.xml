@@ -43,21 +43,21 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     
-    <beans profile="production">
+    <beans profile="dev,default">
         
         <!-- haetaan kannan tiedot herokun konffeista -->
         <bean class="java.net.URI" id="dbUrl">
             <constructor-arg value="${DATABASE_URL}"/>
         </bean>
         
-        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
+<!--        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
               factory-method="text">
             <constructor-arg value="${security.encryptPassword}" />
             <constructor-arg value="${security.encryptSalt}" />
-        </bean>
+        </bean>-->
         
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
+            <property name="properties" value="persistenceUnitName=persistenceUnitDev"/>
         </bean>
         
 <!--        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -76,12 +76,12 @@
         </bean>
     </beans>
     
-    <beans profile="dev,default">
+    <beans profile="production">
         <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
               factory-method="noOpText" />
             
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="properties" value="persistenceUnitName=persistenceUnitDev"/>
+            <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
         </bean>
         <jdbc:embedded-database id="dataSource" type="HSQL"> 
             <jdbc:script location="classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql" />
