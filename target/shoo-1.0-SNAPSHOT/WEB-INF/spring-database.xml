@@ -47,7 +47,9 @@
         
         <!-- haetaan kannan tiedot herokun konffeista -->
         <bean class="java.net.URI" id="dbUrl">
-            <constructor-arg value="${DATABASE_URL}"/>
+            <constructor-arg value="postgres://bbntzlhmds:4SeHklzZN7am_VQQe9SH@ec2-23-21-64-4.compute-1.amazonaws.com/bbntzlhmds"/>
+<!--            <constructor-arg value="${DATABASE_URL}"/>-->
+            
         </bean>
         
 <!--        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
