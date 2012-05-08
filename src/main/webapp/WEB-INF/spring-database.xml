@@ -43,23 +43,23 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     
-    <beans profile="dev,default">
+    <beans profile="production">
         
         <!-- haetaan kannan tiedot herokun konffeista -->
         <bean class="java.net.URI" id="dbUrl">
-            <constructor-arg value="postgres://bbntzlhmds:4SeHklzZN7am_VQQe9SH@ec2-23-21-64-4.compute-1.amazonaws.com/bbntzlhmds"/>
+            <constructor-arg value="${DATABASE_URL}"/>
 <!--            <constructor-arg value="${DATABASE_URL}"/>-->
             
         </bean>
         
-<!--        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
+        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
               factory-method="text">
             <constructor-arg value="${security.encryptPassword}" />
             <constructor-arg value="${security.encryptSalt}" />
-        </bean>-->
+        </bean>
         
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="properties" value="persistenceUnitName=persistenceUnitDev"/>
+            <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
         </bean>
         
 <!--        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -70,20 +70,25 @@
         </bean>-->
         
         <!-- käytetään herokun kantaa -->
-        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <bean id="dataSource" class="org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql">
             <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="scriptLocations">
+                <list>
+                    <value>classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql</value>
+                </list>
+            </property>
             <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
             <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
             <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
         </bean>
     </beans>
     
-    <beans profile="production">
+    <beans profile="dev,default">
         <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
               factory-method="noOpText" />
             
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
+            <property name="properties" value="persistenceUnitName=persistenceUnitDev"/>
         </bean>
         <jdbc:embedded-database id="dataSource" type="HSQL"> 
             <jdbc:script location="classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql" />
