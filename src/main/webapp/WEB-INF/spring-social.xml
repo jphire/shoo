@@ -46,6 +46,7 @@
     
     <bean class="org.springframework.social.connect.web.ProviderSignInController">
         <property name="applicationUrl" value="http://localhost:8080/shoo" />
+<!--        <property name="applicationUrl" value="http://shoo/heroku.com" />-->
         <property name="signUpUrl" value="/signup" />
     <!-- relies on by-type autowiring for the constructor-args -->
     </bean>
