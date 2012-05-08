@@ -12,6 +12,8 @@ public interface UserService {
     
     public User getUser(String userName);
     
+    public void removeUser(User user);
+    
     @PreAuthorize("isAuthenticated()")
     public void updateProfile(User user, String userName);
     

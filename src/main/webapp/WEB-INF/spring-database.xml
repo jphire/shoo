@@ -70,13 +70,8 @@
         </bean>-->
         
         <!-- käytetään herokun kantaa -->
-        <bean id="dataSource" class="org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql">
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="driverClassName" value="org.postgresql.Driver"/>
-            <property name="scriptLocations">
-                <list>
-                    <value>classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql</value>
-                </list>
-            </property>
             <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
             <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
             <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
