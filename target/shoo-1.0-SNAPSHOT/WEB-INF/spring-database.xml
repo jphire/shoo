@@ -44,6 +44,12 @@
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
     
     <beans profile="production">
+        
+        <!-- haetaan kannan tiedot herokun konffeista -->
+        <bean class="java.net.URI" id="dbUrl">
+            <constructor-arg value="${DATABASE_URL}"/>
+        </bean>
+        
         <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
               factory-method="text">
             <constructor-arg value="${security.encryptPassword}" />
@@ -54,11 +60,19 @@
             <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
         </bean>
         
-        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<!--        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
             <property name="url" value="jdbc:mysql://localhost:3306/awesome"/>
             <property name="username" value="root"/>
             <property name="password" value=""/>
+        </bean>-->
+        
+        <!-- käytetään herokun kantaa -->
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="org.postgresql.Driver"/>
+            <property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + @dbUrl.getPath() }"/>
+            <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+            <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
         </bean>
     </beans>
     

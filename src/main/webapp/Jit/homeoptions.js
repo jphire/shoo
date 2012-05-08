@@ -39,7 +39,7 @@ function init(){
         injectInto: 'infovis-grid',
         //Optional: create a background canvas that plots
         //concentric circles.
-           
+        
         background: {
             numberOfCircles: 0,
             CanvasStyles: {
@@ -47,22 +47,26 @@ function init(){
             }
         },
         
-        width: 470,
-        height: 300,
-        levelDistance: 80,
+        width: 800,
+        height: 600,
+        levelDistance: 120,
         fps: 40,
         //Add navigation capabilities:
         //zooming by scrolling and panning.
         Navigation: {
             enable: true,
             panning: true,
-            zooming: 45
+            zooming: 25
         },
         //Set Node and Edge styles.
         Node: {
             overridable: true,
             type: 'circle',
-            color: '#ddeeff'
+            color: '#4b94fb',
+            dim: 20,
+            alpha: 1,
+            angularWidth: 1,
+            span: 2
             
         },
         
@@ -70,13 +74,38 @@ function init(){
             overridable: true,
             color: '#1464F4',
             alpha: 0.9,
-            lineWidth:1.2
+            lineWidth:4.2
+        },
+        
+        Label:
+        {
+            type: 'HTML',
+            overridable: true
         },
         
         Events: {
     
             enable: true,
             overridable: true,
+            enableForEdges: true,
+            type : 'Native', //edge event doesn't work with 'HTML'
+        
+            onMouseEnter: function(node, eventInfo, e){
+                console.log(node);
+                if(!node || node.nodeFrom)
+                    return;
+                node.data.$dim = 30;
+                rgraph.plot();
+                rgraph.canvas.getElement().style.cursor = 'pointer';
+            },
+            
+            onMouseLeave: function(node, eventInfo, e){
+                if(!node || node.nodeFrom)
+                    return;
+                node.data.$dim = 20;
+                rgraph.plot();
+                rgraph.canvas.getElement().style.cursor = '';
+            },
             
             onClick: function(node, eventInfo, e){
                 if(!node || node.nodeFrom)
@@ -91,7 +120,7 @@ function init(){
         },
         
         Tips: {
-            enable: true,
+            enable: false,
             type: 'HTML',
             align: 'left',
 
@@ -120,25 +149,25 @@ function init(){
         //This method is called once, on label creation.
         onCreateLabel: function(domElement, node){
     
-            domElement.innerHTML = user.name + "<br/>";
-                    var img = document.createElement("img");
-                    picsource = 'http://graph.facebook.com/' + user.id + '/picture';
-                    img.setAttribute("src", picsource);
-                    img.setAttribute("class", "canvaspic");
-                    img.setAttribute("id", user.id);
-                    domElement.appendChild(img);
+            domElement.innerHTML = node.name + "<br/>";
+        //            var img = document.createElement("img");
+        //            picsource = 'http://graph.facebook.com/' + user.id + '/picture';
+        //            img.setAttribute("src", picsource);
+        //            img.setAttribute("class", "canvaspic");
+        //            img.setAttribute("id", user.id);
+        //            domElement.appendChild(img);
                     
-//            FB.api('/' + node.id, function(user) {
-//                if (user) {
-//                    domElement.innerHTML = user.name + "<br/>";
-//                    var img = document.createElement("img");
-//                    picsource = 'http://graph.facebook.com/' + user.id + '/picture';
-//                    img.setAttribute("src", picsource);
-//                    img.setAttribute("class", "canvaspic");
-//                    img.setAttribute("id", user.id);
-//                    domElement.appendChild(img);
-//                }
-//            });
+        //            FB.api('/' + node.id, function(user) {
+        //                if (user) {
+        //                    domElement.innerHTML = user.name + "<br/>";
+        //                    var img = document.createElement("img");
+        //                    picsource = 'http://graph.facebook.com/' + user.id + '/picture';
+        //                    img.setAttribute("src", picsource);
+        //                    img.setAttribute("class", "canvaspic");
+        //                    img.setAttribute("id", user.id);
+        //                    domElement.appendChild(img);
+        //                }
+        //            });
                 
         },
         //Change some label dom properties.

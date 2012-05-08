@@ -15,7 +15,10 @@ function initGraph(){
 
 function show(){
     
-    var list = [{id:"1", name:"social"}];
+    var list = [{id:"1", name:"social", children:[{id:"33", name:"facebook"}, {id:"44", name:"twitter"}]},
+        {id:"3", name:"news", children:[{id:"35", name:"this"}, {id:"46", name:"that"}]},
+        {id:"4", name:"calendar", children:[{id:"55", name:"this"}, {id:"56", name:"that"}]},
+    ];
         
     
     $.getJSON(appURL + '/home/user', function(response){
@@ -33,7 +36,5 @@ function show(){
         }
         
     });
-           
-    
-       
+               
 };

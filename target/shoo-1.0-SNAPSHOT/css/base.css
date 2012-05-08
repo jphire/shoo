@@ -18,7 +18,7 @@ span#userid {
 }
 
 .home-grid {
-    height: 200px;
+    height: 600px;
 }
 
 .grid {
@@ -216,7 +216,7 @@ div#right-container p {
 #infovis-grid {
     position:relative;
     width: 100%;
-    height:150px;
+    height:800px;
     margin:auto;
     overflow:hidden;
 }
@@ -224,11 +224,15 @@ div#right-container p {
     background-color: #fcbd64;
 }
 
-#down-left, #up-right {
+#down-left, #up-left {
+    background-color: #a2d6a2;
+/*    #BBD8E9*/
+}
+#up-left {
     background-color: #BBD8E9;
 }
 
-#up-left {
+#up-right {
     background-color: #7ec77e;
 }
 

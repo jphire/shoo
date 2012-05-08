@@ -63,7 +63,7 @@
                 <h1>Your Connections</h1>
                 <hr/>
                 <c:forEach var="providerId" items="${providerIds}">
-                    <div class="well span4" id="up-right">
+                    <div class="well span4" id="up-left">
                         <c:set var="connections" value="${connectionMap[providerId]}" />
                         <div class="span4">
                             <h3>${providerId}</h3>
@@ -79,12 +79,12 @@
                                         <input type="hidden" name="scope" value="publish_stream,offline_access" />
                                     </c:if>
                                     <p>Not yet connected</p>
-                                    <button type="submit" class="btn btn-success btn-small">Connect&raquo;</button>
+                                    <button type="submit" class="btn btn-success btn-medium">Connect&raquo;</button>
                                 </form>
-                                <hr/>
+                                
                             </div>
                         </c:if>
-
+                        
                         <c:forEach items="${connections}" var="connection">
                             <c:url value="/connect/${providerId}" var="disconnectUrl"/>
 
@@ -94,13 +94,11 @@
                             <div class="span2">
                                 <form id="disconnect${connection.key.providerUserId}" action="${disconnectUrl}/${connection.key.providerUserId}" method="post">
                                     <p>Connected to ${providerId}</p>
-                                    <button class ="btn btn-danger btn-small" type="submit">Disconnect</button>	
+                                    <button class ="btn btn-danger btn-medium" type="submit">Disconnect</button>	
                                     <input type="hidden" name="_method" value="delete" />
-                                </form>
-                                <hr/>   
+                                </form>   
                             </div>                       
                         </c:forEach>
-
                     </div>
                 </c:forEach>
 
