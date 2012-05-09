@@ -44,8 +44,8 @@ public class Config {
 		ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
 		registry.addConnectionFactory(new TwitterConnectionFactory("P1aA3U1rmTH8VIzFWMEXg",
 				"HJ0X2rfUa0vUHa4oyTfiTdLXTsy5I8QdfV4RyiQ8jbQ"));
-		registry.addConnectionFactory(new FacebookConnectionFactory("377679492261871",
-				"479c9486c41573105ce1fce374c88461"));
+		registry.addConnectionFactory(new FacebookConnectionFactory("297883533612989",
+				"a87a0cd4f3b20550eca174a598dddc35"));
 //		registry.addConnectionFactory(new LinkedInConnectionFactory(environment.getProperty("linkedin.consumerKey"),
 //				environment.getProperty("linkedin.consumerSecret")));
 		return registry;
