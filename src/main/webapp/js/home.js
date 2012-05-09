@@ -9,7 +9,7 @@ $(document).ready(function() {
     appURL = "http://localhost:8080/shoo";
     
     //for production, uncomment next line
-    appURL = "http://shoo.heroku.com";
+    appURL = "http://shoo.herokuapp.com";
     initGraph();
 });
 

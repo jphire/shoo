@@ -65,7 +65,8 @@ public class SocialController {
         } else {
 
             List<Post> posts = connection.getApi().feedOperations().getPosts();
-
+           
+            
             model.addAttribute("connectionsToFacebook", facebookConnections);
 
             model.addAttribute("friends", facebook.userOperations().getUserPermissions());

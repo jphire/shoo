@@ -7,6 +7,7 @@ $(document).ready(function() {
     
     appId = "377679492261871";
     appURL = "http://localhost:8080/shoo/";
+    appURL = "http://shoo/herokuapp.com/";
     myId = 0;
     var userId = $('#userid').get(0).innerHTML;
     
