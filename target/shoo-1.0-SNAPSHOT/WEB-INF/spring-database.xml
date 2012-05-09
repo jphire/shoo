@@ -72,7 +72,7 @@
             <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
         </bean>
         
-        <jdbc:initialize-database data-source="dataSource">
+        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
             <jdbc:script location="classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql" />
         </jdbc:initialize-database>
     </beans>

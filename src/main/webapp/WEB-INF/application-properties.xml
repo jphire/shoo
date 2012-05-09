@@ -9,9 +9,9 @@
 	<context:property-placeholder properties-ref="defaultProperties" />
 
 	<util:properties id="defaultProperties">
-		<prop key="application.url">http://localhost:8080/shoo</prop>
-		<prop key="facebook.clientId">377679492261871</prop>
-		<prop key="facebook.clientSecret">479c9486c41573105ce1fce374c88461</prop>
-		
+		<prop key="facebook.clientId">297883533612989</prop>
+		<prop key="facebook.clientSecret">a87a0cd4f3b20550eca174a598dddc35</prop>
+		<prop key="twitter.consumerKey">P1aA3U1rmTH8VIzFWMEXg</prop>
+		<prop key="twitter.consumerSecret">HJ0X2rfUa0vUHa4oyTfiTdLXTsy5I8QdfV4RyiQ8jbQ</prop>
 	</util:properties>
 </beans>

@@ -4,18 +4,11 @@
  */
 package wad.spring.service;
 
-import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -46,8 +39,6 @@ public class SignInAdapterImpl implements SignInAdapter {
 	public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
 		
                 User user = userService.getUser(localUserId);
-                System.out.println(user.getUsername());
-                //List<GrantedAuthority> authorities = (List<GrantedAuthority>) details.getAuthorities();
                 SignInUtil.signin(user);
 		return null;
 	}

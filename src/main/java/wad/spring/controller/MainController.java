@@ -48,7 +48,7 @@ public class MainController {
     }
     
     @RequestMapping(value = "*")
-    public String login(Model model) {
+    public String all(Model model) {
         return "redirect:/home";
     }
 

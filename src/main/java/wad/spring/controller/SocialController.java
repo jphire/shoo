@@ -28,7 +28,6 @@ import org.springframework.social.twitter.api.UserList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import wad.spring.domain.FeedList;
 import wad.spring.repository.UserRepository;
 
 /**
@@ -59,9 +58,6 @@ public class SocialController {
     @RequestMapping(value = "/facebook", method = RequestMethod.GET)
     public String facebookHome(HttpServletRequest request, Model model) {
 
-//        List<String> friendIds = facebook.friendOperations().getFriendIds();
-//        FacebookProfile firstFriend = facebook.userOperations().getUserProfile(friendIds.get(0));
-
         Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
         List<Connection<Facebook>> facebookConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
         if (facebookConnections.isEmpty()) {
@@ -83,8 +79,7 @@ public class SocialController {
 
     @RequestMapping(value = "/facebook", method = RequestMethod.POST)
     public String facebookUserPost(@RequestParam String userId, Model model) throws IOException {
-        System.out.println("userId: " + userId);
-
+        
         return "redirect:facebook/" + userId;
     }
 
@@ -92,9 +87,9 @@ public class SocialController {
     public String facebookUserGet(Model model, @PathVariable Long userId) throws IOException {
 
         String s = userId.toString();
-        System.out.println(s);
         Connection<Facebook> connection = getConnectionRepository().findPrimaryConnection(Facebook.class);
         List<Connection<Facebook>> facebookConnections = connectionRepositoryProvider.get().findConnections(Facebook.class);
+        
         if (facebookConnections.isEmpty()) {
             return "redirect:/connect";
         } else {
@@ -112,9 +107,6 @@ public class SocialController {
 
     @RequestMapping(value = "/twitter", method = RequestMethod.GET)
     public String twitterHome(HttpServletRequest request, Model model) {
-
-//        List<String> friendIds = twitter.friendOperations().getFriendIds();
-//        TwitterProfile firstFriend = twitter.userOperations().getUserProfile(friendIds.get(0));
 
         Connection<Twitter> connection = getConnectionRepository().findPrimaryConnection(Twitter.class);
         List<Connection<Twitter>> twitterConnections = connectionRepositoryProvider.get().findConnections(Twitter.class);
@@ -135,8 +127,7 @@ public class SocialController {
 
     @RequestMapping(value = "/twitter", method = RequestMethod.POST)
     public String twitterUserPost(@RequestParam String userId, Model model) throws IOException {
-        System.out.println("userId: " + userId);
-
+        
         return "redirect:twitter/" + userId;
     }
 
@@ -144,9 +135,9 @@ public class SocialController {
     public String twitterUserGet(Model model, @PathVariable Long userId) throws IOException {
 
         String s = userId.toString();
-        System.out.println(s);
         Connection<Twitter> connection = getConnectionRepository().findPrimaryConnection(Twitter.class);
         List<Connection<Twitter>> twitterConnections = connectionRepositoryProvider.get().findConnections(Twitter.class);
+
         if (twitterConnections.isEmpty()) {
             return "redirect:/connect";
         } else {

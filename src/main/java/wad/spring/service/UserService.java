@@ -2,7 +2,6 @@ package wad.spring.service;
 
 import java.util.List;
 import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.access.prepost.PreAuthorize;
 import wad.spring.domain.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -20,7 +19,6 @@ public interface UserService {
     @PreAuthorize("hasRole('admin')")
     public List<User> getUsers();
 
-//    public User findByLogin(Long userId);
     @PreAuthorize("isAuthenticated()")
     public String getUsername();
 
