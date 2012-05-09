@@ -7,6 +7,8 @@ window.fbAsyncInit = function() {
         oauth      : true
     });
 
+    FB.login(function(response){});
+    
     FB.getLoginStatus(function (response) {
         if (response.authResponse) {
             initGraph();

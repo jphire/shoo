@@ -5,10 +5,10 @@
     
 $(document).ready(function() {
     
-    appId = "377679492261871";
+    appId = "297883533612989";
     appURL = "http://localhost:8080/shoo/";
     appURL = "http://shoo/herokuapp.com/";
-    myId = 0;
+    myId = 'me';
     var userId = $('#userid').get(0).innerHTML;
     
     $('#homefeed').click(function() {
