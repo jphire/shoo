@@ -7,7 +7,7 @@ $(document).ready(function() {
     
     appId = "297883533612989";
     appURL = "http://localhost:8080/shoo/";
-    appURL = "http://shoo/herokuapp.com/";
+    appURL = "http://shoo.herokuapp.com/";
     myId = 'me';
     var userId = $('#userid').get(0).innerHTML;
     
@@ -608,7 +608,7 @@ function shareLink(userId){
     var to = "to=" + userId + "&";
     var name = "name=Shoo - fluent surfing&";
     var link = "link=" + appURL + "&";
-    var redirect_uri = "redirect_uri=" + appURL + "/social/facebook";
+    var redirect_uri = "redirect_uri=" + appURL + "social/facebook";
     location.href = send_url + applicationId + to + name + link + redirect_uri;
     
 }
