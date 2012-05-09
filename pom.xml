@@ -357,17 +357,18 @@
     </dependencies>
 
     <repositories>
+        
+        <repository>
+            <id>spring-snapshot</id>
+            <name>Spring Maven SNAPSHOT Repository</name>
+            <url>http://maven.springframework.org/snapshot</url>
+        </repository>
+        
         <repository>
             <id>java.net repo</id>
             <url>http://download.java.net/maven/2/</url>
             <layout>default</layout>
         </repository>
-        
-        <!-- deprecated
-        <repository>
-            <id>jboss repo</id>
-            <url>http://repository.jboss.com/maven2</url>
-        </repository> -->
         
         <repository>
             <id>eclipselink repo</id>
@@ -380,11 +381,12 @@
             <url>http://maven.springframework.org/milestone</url>
         </repository>
         
+        <!-- deprecated
         <repository>
-            <id>spring-snapshot</id>
-            <name>Spring Maven SNAPSHOT Repository</name>
-            <url>http://maven.springframework.org/snapshot</url>
-        </repository>
+            <id>jboss repo</id>
+            <url>http://repository.jboss.com/maven2</url>
+        </repository> -->
+        
     </repositories>
 
     <build>
