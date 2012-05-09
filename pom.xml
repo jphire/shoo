@@ -358,6 +358,32 @@
 
     <repositories>
         
+		<!-- For testing against latest Spring snapshots -->
+        <repository>
+            <id>org.springframework.maven.snapshot</id>
+            <name>Spring Maven Snapshot Repository</name>
+            <url>http://repo.springsource.org/libs-snapshot-local</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+		<!-- For developing against latest Spring milestones -->
+        <repository>
+            <id>org.springframework.maven.milestone</id>
+            <name>Spring Maven Milestone Repository</name>
+            <url>http://repo.springsource.org/libs-milestone-local</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- deprecated
+        <repository>
+            <id>jboss repo</id>
+            <url>http://repository.jboss.com/maven2</url>
+        </repository> -->
         <repository>
             <id>spring-snapshot</id>
             <name>Spring Maven SNAPSHOT Repository</name>
@@ -392,33 +418,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-		<!-- For testing against latest Spring snapshots -->
-        <repository>
-            <id>org.springframework.maven.snapshot</id>
-            <name>Spring Maven Snapshot Repository</name>
-            <url>http://repo.springsource.org/libs-snapshot-local</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-		<!-- For developing against latest Spring milestones -->
-        <repository>
-            <id>org.springframework.maven.milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://repo.springsource.org/libs-milestone-local</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <!-- deprecated
-        <repository>
-            <id>jboss repo</id>
-            <url>http://repository.jboss.com/maven2</url>
-        </repository> -->
-        
     </repositories>
 
     <build>
