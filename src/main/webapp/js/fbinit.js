@@ -1,14 +1,12 @@
 window.fbAsyncInit = function() {
     FB.init({
-        appId      : '377679492261871',
+        appId      : '297883533612989',
         status     : true, 
         cookie     : true,
         xfbml      : true,
         oauth      : true
     });
 
-    FB.login(function(response){});
-    
     FB.getLoginStatus(function (response) {
         if (response.authResponse) {
             initGraph();
