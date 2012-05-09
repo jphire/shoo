@@ -47,7 +47,7 @@
         
         <!-- haetaan kannan tiedot herokun konffeista -->
         <bean class="java.net.URI" id="dbUrl">
-<!--            <constructor-arg value="postgres://janne:mcnab2013@localhost/shoo"/>-->
+<!--            <constructor-arg value="postgres://name:password@localhost/shoo"/>-->
             <constructor-arg value="${DATABASE_URL}"/>
             
         </bean>
@@ -63,13 +63,6 @@
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
         </bean>
-        
-<!--        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-            <property name="url" value="jdbc:mysql://localhost:3306/awesome"/>
-            <property name="username" value="root"/>
-            <property name="password" value=""/>
-        </bean>-->
         
         <!-- käytetään herokun kantaa -->
         <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -4,7 +4,12 @@
  */
 
 $(document).ready(function() {
+    
+    //for local development:
     appURL = "http://localhost:8080/shoo";
+    
+    //for production, uncomment next line
+    appURL = "http://shoo.heroku.com";
     initGraph();
 });
 
