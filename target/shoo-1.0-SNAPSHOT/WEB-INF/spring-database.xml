@@ -47,17 +47,19 @@
         
         <!-- haetaan kannan tiedot herokun konffeista -->
         <bean class="java.net.URI" id="dbUrl">
+<!--            <constructor-arg value="postgres://janne:mcnab2013@localhost/shoo"/>-->
             <constructor-arg value="${DATABASE_URL}"/>
-<!--            <constructor-arg value="${DATABASE_URL}"/>-->
             
         </bean>
         
-        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
+<!--        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
               factory-method="text">
             <constructor-arg value="${security.encryptPassword}" />
             <constructor-arg value="${security.encryptSalt}" />
-        </bean>
-        
+        </bean>-->
+        <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
+              factory-method="noOpText" />
+       
         <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="properties" value="persistenceUnitName=persistenceUnitProduction"/>
         </bean>
