@@ -4,6 +4,9 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import wad.spring.domain.User;
@@ -18,13 +21,6 @@ import wad.spring.repository.UserRepository;
     "classpath:spring-database-test.xml", "classpath:spring-social-test.xml", "classpath:spring-security-test.xml"})
 public class UserServiceTest {
     
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
     
     @Before
     public void setUp() {
@@ -32,6 +28,7 @@ public class UserServiceTest {
     
     @After
     public void tearDown() {
+        userRepository.deleteAll();
     }
     
     @Autowired
@@ -46,10 +43,8 @@ public class UserServiceTest {
 
         User u = new User();
         u.setUsername("Matti");
-        userService.addUser(u);
-        System.out.println(countAtStart);
-        long countAtEnd = userRepository.count();
-        System.out.println(countAtEnd);
+        userService.addUser(u);  
+        long countAtEnd = userRepository.count();      
         Assert.assertTrue("User count should be increased by one when adding an element.",
                 countAtStart + 1 == countAtEnd);
     }
@@ -62,9 +57,7 @@ public class UserServiceTest {
         User u = userService.addUser(temp);
         long countAtStart = userRepository.count();
         userService.removeUser(u);
-         System.out.println(countAtStart);
         long countAtEnd = userRepository.count();
-        System.out.println(countAtEnd);
         Assert.assertTrue("User count should be increased by one when adding an element.",
                 countAtStart - 1 == countAtEnd);
     }
@@ -90,5 +83,45 @@ public class UserServiceTest {
 
         Assert.assertTrue("getUser should return correct id.",
                 userService.getUser("Test").getId() == u.getId());
+    }
+    
+    @Test
+    public void updateProfileUpdatesUserinfo() {
+        
+        User temp = new User();
+        temp.setUsername("Test");
+        temp.setPassword("this");
+        User u = userService.addUser(temp);
+        
+        User temp2 = new User();
+        temp2.setUsername("Test2");
+        temp2.setPassword("that");
+        userService.updateProfile(temp2, u.getUsername());
+        
+        Assert.assertTrue("updateProfile doesn't update user info.",
+                userService.getUser(u.getUsername()).getPassword() == temp2.getPassword());
+    }
+    
+    @Test
+    public void getUsernameReturnsNullWhenNotAuthorized() {
+        
+        Assert.assertTrue("getUser should return null if not authorized.",
+                userService.getUsername() == null);
+    }
+    
+    @Test
+    public void getUsernameReturnsCorrectNameWhenAuthorized() {
+        
+        User temp = new User();
+        temp.setUsername("Test");
+        temp.setPassword("this");
+        User u = userService.addUser(temp);
+        
+        //Log user in
+        Authentication auth = new UsernamePasswordAuthenticationToken(u.getUsername(), u.getPassword());       
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        
+        Assert.assertTrue("getUser should return correct name when authorized.",
+                userService.getUsername() == "Test");
     }
 }
