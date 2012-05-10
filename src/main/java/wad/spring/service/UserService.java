@@ -13,13 +13,13 @@ public interface UserService {
     
     public void removeUser(User user);
     
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public void updateProfile(User user, String userName);
     
-    @PreAuthorize("hasRole('admin')")
+//    @PreAuthorize("hasRole('admin')")
     public List<User> getUsers();
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public String getUsername();
 
 }
