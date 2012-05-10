@@ -22,6 +22,12 @@ import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
+
+/*
+ * This is additional configuration mainly for Spring Social. Currently other
+ * configuration is in xml.
+ */
+
 @Configuration
 public class Config {
 
