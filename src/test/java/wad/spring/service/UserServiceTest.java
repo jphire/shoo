@@ -99,7 +99,7 @@ public class UserServiceTest {
         userService.updateProfile(temp2, u.getUsername());
         
         Assert.assertTrue("updateProfile doesn't update user info.",
-                userService.getUser(u.getUsername()).getPassword() == temp2.getPassword());
+                userService.getUser(u.getUsername()).getPassword().equals(temp2.getPassword()));
     }
     
     @Test
@@ -122,6 +122,6 @@ public class UserServiceTest {
         SecurityContextHolder.getContext().setAuthentication(auth);
         
         Assert.assertTrue("getUser should return correct name when authorized.",
-                userService.getLoggedInUsername() == "Test");
+                userService.getLoggedInUsername().equals("Test"));
     }
 }

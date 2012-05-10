@@ -8,8 +8,6 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,7 +21,7 @@ import wad.spring.repository.UserRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-context-test.xml",
     "classpath:spring-database-test.xml", "classpath:spring-social-test.xml", "classpath:spring-security-test.xml"})
-public class LoginServiceTest {
+public class SignInUtilTest {
     
     @Before
     public void setUp() {
@@ -41,20 +39,17 @@ public class LoginServiceTest {
     @Autowired
     UserService userService;
     
-    @Autowired
-    LoginService loginService;
-    
     @Test
-    public void loginServiceLoginLogsUserCorrectly() {
+    public void signInUtilSignsUserIn() {
         User temp = new User();
         temp.setUsername("Test");
         temp.setPassword("this");
         User u = userService.addUser(temp);
         
         //Log user in
-        loginService.loginUser(u);
+        SignInUtil.signin(u);
         
-        Assert.assertTrue("User count should be increased by one when adding an element.",
+        Assert.assertTrue("SignInUtil.signin doesn't sign user in.",
                 userService.getLoggedInUsername().equals(u.getUsername()));
     }
 }
