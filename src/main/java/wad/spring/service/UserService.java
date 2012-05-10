@@ -20,6 +20,6 @@ public interface UserService {
     public List<User> getUsers();
 
 //    @PreAuthorize("isAuthenticated()")
-    public String getUsername();
+    public String getLoggedInUsername();
 
 }

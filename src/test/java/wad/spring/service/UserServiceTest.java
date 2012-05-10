@@ -106,11 +106,11 @@ public class UserServiceTest {
     public void getUsernameReturnsNullWhenNotAuthorized() {
         
         Assert.assertTrue("getUser should return null if not authorized.",
-                userService.getUsername() == null);
+                userService.getLoggedInUsername() == null);
     }
     
     @Test
-    public void getUsernameReturnsCorrectNameWhenAuthorized() {
+    public void getLoggedInUsernameReturnsCorrectNameWhenAuthorized() {
         
         User temp = new User();
         temp.setUsername("Test");
@@ -122,6 +122,6 @@ public class UserServiceTest {
         SecurityContextHolder.getContext().setAuthentication(auth);
         
         Assert.assertTrue("getUser should return correct name when authorized.",
-                userService.getUsername() == "Test");
+                userService.getLoggedInUsername() == "Test");
     }
 }

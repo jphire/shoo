@@ -55,7 +55,7 @@ public class MainController {
     @RequestMapping(value = "/home")
     public String home(HttpServletRequest request, Model model) {
         
-        String userName = userService.getUsername();
+        String userName = userService.getLoggedInUsername();
         
         model.addAttribute("userName", userName);
         
@@ -66,7 +66,7 @@ public class MainController {
     @ResponseBody
     public User getUser(Model model) {
         
-        String userName = userService.getUsername();
+        String userName = userService.getLoggedInUsername();
         User user = new User();
         user.setUsername(userName);
                 

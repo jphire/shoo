@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService{
         
     }
     
-    public String getUsername() {
+    @Override
+    public String getLoggedInUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return null;
