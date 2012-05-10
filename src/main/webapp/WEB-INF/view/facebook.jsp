@@ -9,13 +9,18 @@
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-        <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/jQuery/jquery.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/jQuery/jquery-ui.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/jit.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-collapse.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-button.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/Jit/options.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/fb-user-photos.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/fb-profile.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/fb-graph.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/fb-user-events.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/fb-feed-events.js'/>"></script>   
         <script type="text/javascript" src="<c:url value='/js/fb.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/js/fbinit.js'/>"></script>
         <title>Shoo</title>

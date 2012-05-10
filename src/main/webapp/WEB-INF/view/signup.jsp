@@ -13,12 +13,10 @@
         <link type="text/css" href="<c:url value='/css/base.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap.css'/>" rel="stylesheet">
         <link type="text/css" href="<c:url value='/bootstrap/css/bootstrap-responsive.css'/>" rel="stylesheet">
-        <script type="text/javascript" src="<c:url value='/js/jquery.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>"></script>
-<!--        <script type="text/javascript" src="<c:url value='/Jit/jit.js'/>"></script>-->
+        <script type="text/javascript" src="<c:url value='/jQuery/jquery.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/jQuery/jquery-ui.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/bootstrap/js/bootstrap-collapse.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/Jit/options.js'/>"></script>
         <title>Sign up</title>
     </head>
     <body>

@@ -1,10 +1,9 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */   
+/*
+ * Here we initialize the facebook home page for user
+ */
     
 $(document).ready(function() {
-    
+    //TODO: this shouldn't be global, change to use getJSON to get it from server
     appId = "297883533612989";
     //for development locally
 //    appURL = "http://localhost:8080/shoo/";

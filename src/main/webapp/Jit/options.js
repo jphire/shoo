@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 
-
 var labelType, useGradients, nativeTextSupport, animate;
 
 (function() {
@@ -21,43 +20,14 @@ var labelType, useGradients, nativeTextSupport, animate;
     animate = !(iStuff || !nativeCanvasSupport);
 })();
 
-var Log = {
-    elem: false,
-    write: function(text){
-        if (!this.elem) 
-            this.elem = document.getElementById('log');
-        this.elem.innerHTML = text;
-        this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
-    }
-};
-
-
-//$jit.RGraph.Plot.NodeTypes.implement({
-//  'faceImage': {  
-//        'render': function (node, canvas) {
-//            var img = new Image(),
-//                pos = node.pos.getc(true),
-//                ctx = canvas.getCtx();
-//
-//            img.onload = function () {
-//                ctx.drawImage(img, pos.x - 15, pos.y - 15);
-//            };
-//
-//            //img.src = '/images/user-card_blue.png';
-//        }
-//    }
-//});
-
-
 function init(){
    
-    //init RGraph, BAD WAY
+    //init RGraph
     rgraph = new $jit.RGraph({
         //Where to append the visualization
         injectInto: 'infovis',
         //Optional: create a background canvas that plots
-        //concentric circles.
-           
+        //concentric circles.         
         background: {
             numberOfCircles: 0,
             CanvasStyles: {
@@ -134,16 +104,7 @@ function init(){
             }  
         },
         
-        onBeforeCompute: function(node){
-            
-            Log.write("centering " + node.name + "...");
-        //Add the relation list in the right column.
-        //This list is taken from the data property of each JSON node.
-        //$jit.id('inner-details').innerHTML = node.data.relation;
-        },
-        
-        //Add the name of the node in the correponding label
-        //and a click handler to move the graph.
+        //Add the name of the node in the correponding label.
         //This method is called once, on label creation.
         onCreateLabel: function(domElement, node){
     
@@ -184,11 +145,6 @@ function init(){
     
     });
         
-    //    var ctx = rgraph.canvas.canvases[1].getCtx();
-    //    ctx.fillStyle = "#fff";
-    //    ctx.fillRect(-1000,-600,850,675);
-    //    console.log(ctx);
-    //    
     //load JSON data
     rgraph.loadJSON(json);
     //trigger small animation

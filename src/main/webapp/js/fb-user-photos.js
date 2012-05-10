@@ -1,8 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 function getPhotos(user_id){
                 
     FB.api('/' + user_id + '/photos', function(photos) {
