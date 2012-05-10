@@ -28,7 +28,6 @@ import org.springframework.social.twitter.api.UserList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import wad.spring.repository.UserRepository;
 
 /**
  *
@@ -41,12 +40,10 @@ public class SocialController {
     private final Facebook facebook;
     private final Twitter twitter;
     private final Provider<ConnectionRepository> connectionRepositoryProvider;
-    private final UserRepository userRepository;
 
     @Inject
-    public SocialController(Facebook facebook, Twitter twitter, Provider<ConnectionRepository> connectionRepositoryProvider, UserRepository userRepository, Facebook faecbook) {
+    public SocialController(Facebook facebook, Twitter twitter, Provider<ConnectionRepository> connectionRepositoryProvider) {
         this.connectionRepositoryProvider = connectionRepositoryProvider;
-        this.userRepository = userRepository;
         this.facebook = facebook;
         this.twitter = twitter;
     }

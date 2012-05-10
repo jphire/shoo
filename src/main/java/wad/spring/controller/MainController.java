@@ -9,8 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
@@ -21,26 +19,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import wad.spring.domain.User;
-import wad.spring.repository.UserRepository;
 import wad.spring.service.UserService;
 
 @Controller
 public class MainController {
     
     @Autowired
-    private UserDetailsService userDetailsService;
-    
-    @Autowired
     private UserService userService;
     
     private final Provider<ConnectionRepository> connectionRepositoryProvider;
     
-    private final UserRepository userRepository;
-    
     @Inject
-    public MainController(Provider<ConnectionRepository> connectionRepositoryProvider, UserRepository userRepository) {
+    public MainController(Provider<ConnectionRepository> connectionRepositoryProvider) {
         this.connectionRepositoryProvider = connectionRepositoryProvider;
-        this.userRepository = userRepository;
     }
     
     private ConnectionRepository getConnectionRepository() {
@@ -55,8 +46,7 @@ public class MainController {
     @RequestMapping(value = "/home")
     public String home(HttpServletRequest request, Model model) {
         
-        String userName = userService.getLoggedInUsername();
-        
+        String userName = userService.getLoggedInUsername();     
         model.addAttribute("userName", userName);
         
         return "home";
