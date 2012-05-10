@@ -85,7 +85,7 @@
             <property name="properties" value="persistenceUnitName=persistenceUnitDev"/>
         </bean>
         <jdbc:embedded-database id="dataSource" type="HSQL"> 
-            <jdbc:script location="classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql" />
+<!--            <jdbc:script location="classpath:/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.sql" />-->
         </jdbc:embedded-database>
             
     </beans>
