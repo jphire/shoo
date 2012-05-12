@@ -68,7 +68,7 @@ function addFriendsToGraph(node, choice, limit){
     if(choice == "feed"){
         FB.api('/' + node.id + '/feed', function(friendList) {
             if (!friendList || friendList.error) {
-                alert('Error occured');
+                console.log('Error occured');
             } else {
                 if (friendList.data) {
                     for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
@@ -112,7 +112,7 @@ function addFriendsToGraph(node, choice, limit){
     if(choice == "home"){
         FB.api('/' + node.id + '/home', function(friendList) {
             if (!friendList || friendList.error) {
-                alert('Error occured');
+                console.log('Error occured');
             } else {
                 if (friendList.data) {
                     for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
@@ -157,7 +157,7 @@ function addFriendsToGraph(node, choice, limit){
     if(choice == "photos"){
         FB.api('/' + node.id + '/photos', function(friendList) {
             if (!friendList || friendList.error) {
-                alert('Error occured');
+                console.log('Error occured');
             } else {
                 if (friendList.data) {
                     for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){
@@ -202,7 +202,7 @@ function addFriendsToGraph(node, choice, limit){
     if(choice == "friends"){
         FB.api('/' + node.id + '/friends', function(friendList) {
             if (!friendList || friendList.error) {
-                alert('Error occured');
+                console.log('Error occured');
             } else {
                 if (friendList.data) {
                     for(var j = 0, k = 0; k < limit && j < friendList.data.length; j++){

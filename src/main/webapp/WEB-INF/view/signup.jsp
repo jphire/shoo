@@ -43,6 +43,7 @@
         <div class="container">
             <h1>Sign up</h1>
             <p><c:url value="/signup" var="createUser"/>
+                <p id="error">${error}</p>
                 <form:form action="${createUser}" method='POST'>
                     <label for="username">Username</label><input type="text" name="username"/><br/>
                     <label for="password">Password</label><input type="password" name="password"/><br/>

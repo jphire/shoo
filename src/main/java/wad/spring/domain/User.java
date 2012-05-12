@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity(name = "USERS")
 public class User implements Serializable {
@@ -13,7 +14,10 @@ public class User implements Serializable {
     private Long id;
     @Column(unique = true)
     @NotNull
+    @Size(min=4, max=20, message="Username should be between 4 and 20 characters long")
     private String username;
+//    @NotNull
+//    @Size(min=4, max=20, message="Password should be between 4 and 20 characters long")
     private String password;
     
     

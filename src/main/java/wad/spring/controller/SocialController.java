@@ -23,6 +23,7 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.*;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.twitter.api.CursoredList;
+import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.UserList;
 import org.springframework.stereotype.Controller;
@@ -111,14 +112,12 @@ public class SocialController {
         if (twitterConnections.isEmpty()) {
             return "redirect:/connect";
         } else {
-            CursoredList<UserList> posts = connection.getApi().listOperations().getLists();
-
-            model.addAttribute("connectionsToTwitter", twitterConnections);
-
+//            CursoredList<UserList> posts = connection.getApi().listOperations().getLists();
+            List<Tweet> tweets = twitter.timelineOperations().getHomeTimeline();
+            
             model.addAttribute("profile", twitter.userOperations().getUserProfile());
-            model.addAttribute("feed", posts);
-            model.addAttribute("userid", "me");
-
+            model.addAttribute("hometweets", tweets);
+            
             return "twitter";
         }
     }

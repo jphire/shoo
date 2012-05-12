@@ -41,11 +41,19 @@ public class LoginController {
     
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String registerUser(WebRequest request, HttpServletRequest httpRequest, @ModelAttribute User u, Model model) {
-
-        User user = userService.addUser(u);
-
-        //Programmatically login user
-        loginService.loginUser(user);
+        
+        User user;
+                
+        if(userService.getUser(u.getUsername()) == null ){
+            user = userService.addUser(u);
+            //Programmatically login user
+            loginService.loginUser(user);
+        }
+        else{
+            user = null;
+            model.addAttribute("error", "Username is already in use, choose another!");
+            return "signup";
+        }
         
        // httpRequest.getSession( true );
         return "redirect:/";

@@ -33,7 +33,6 @@
                             <a href="${home}">Home</a>
                         </li>
                         <li><a href="/info">Info</a></li>
-                        <li><a href="#"></a></li>
                     </ul>
                 </div>
             </div>
@@ -43,7 +42,7 @@
             <!-- Main hero unit for a primary marketing message or call to action -->
             <div class="hero-unit">
                 <h1>Shoo!!</h1>
-                <p>Shoo is an easier-to-use - interface for internet applications. </p>
+                <p>Shoo - making web simple</p>
                 <p><c:url value="/j_spring_security_check" var="login"/>
                     <form:form action="${login}" method='POST'>
                         <label for="j_username">Username</label><input type="text" name="j_username"/><br/>
